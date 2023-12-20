@@ -1,0 +1,16 @@
+<div class="container">
+    {{#> AuthForm}}
+        {{> Logo}}
+        {{> Headline label='Registration'}}
+        {{> Input name='email' label='Mail' }}
+        {{> Input name='login' label='Login' }}
+        {{> Input name='first_name' label='Name' }}
+        {{> Input name='second_name' label='Last name' }}
+        {{> Input name='phone' label='Phone' }}
+        {{> Input name='password' type='password' label='Password' }}
+        {{> Input name='password_two' type='password' label='Password (again)' }}
+        {{> Button label='Create' type='basic' page='chat'}}
+        {{> AuthLink text="Already have an account?" label='Login in here' href='login'}}
+    {{/AuthForm}}
+</div>
+ 
