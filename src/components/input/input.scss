@@ -1,8 +1,8 @@
 .input {
-    margin-top: 20px;
-    padding: 0 20px;
-  }
-  
+  margin-top: 20px;
+  padding: 0 20px;
+}
+
 .input__container {
   display: flex;
   height: 40px;
@@ -16,9 +16,7 @@
   font-size: 12px;
   font-weight: 500;
   user-select: none;
-  transition:
-    font-size 0.3s,
-    transform 0.3s;
+  transition: font-size 0.3s, transform 0.3s;
 }
 
 .input__element {
@@ -27,7 +25,6 @@
   border-bottom: var(--text-secondary-color) solid;
   font-size: 16px;
   font-weight: 500;
-  color: var(--text-color);
   padding-bottom: 4px;
   &:focus-visible {
     outline: none;
@@ -47,13 +44,41 @@
   transform: translateY(-44px);
   font-size: 10px;
 }
-  
-  
- .input__error .input__text-error {
-    display: block;
-  }
-  
+
+.input__error .input__text-error {
+  display: block;
+}
+
 .input__error .input__element {
-    color: var(--error-color);
+  color: var(--error-color);
+}
+
+.input__profile {
+  width: 100%;
+  margin: 10px 0;
+}
+
+.input__container__profile {
+  display: flex;
+  flex-direction: row-reverse;
+  justify-content: space-between;
+  text-align: right;
+}
+
+.input__element__profile {
+  padding: 0%;
+  border: none;
+  font-size: 15px;
+  font-weight: 500;
+  text-align: right;
+  padding-bottom: 4px;
+  &:focus-visible {
+    outline: none;
   }
-  
+}
+
+.input__label__profile {
+  font-size: 14px;
+  font-weight: 500;
+  user-select: none;
+}

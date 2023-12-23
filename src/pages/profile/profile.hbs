@@ -1,0 +1,25 @@
+<div class='profile'>
+    {{> Button label='Return' type='return' page='chat'}}
+    {{#> ProfileConteiner}}
+    <div class='profile-header'>
+        <img class='dialog-list__logo' src='man.png' alt='avatar' page='profile'>
+        <h2>Vasiliy</h2>
+        <p>+7 (981) 755-85-28</p>
+    </div>
+    <div class='profile-item-list'>
+        <ul>
+            <form class='profile-form'>
+                {{#each (list)}}
+                     <li>
+                        {{> Input style='__profile' disabled='disabled'}}
+                     </li>
+                {{/each}}
+            </form>
+        </ul>
+    </div>
+    <div class='profile-buttons'>
+        {{> Button label='Edit' type='edit' id='edit'}}
+        {{> Button label='Сhange password' type='edit' page='password'}}
+    </div>
+    {{/ProfileConteiner}}
+</div>

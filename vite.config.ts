@@ -4,5 +4,8 @@ export default defineConfig({
     build: {
         outDir: 'dist'
     },
-    publicDir: './static'
+    publicDir: './static',
+    server: {
+        port: 3000,
+      }
 })

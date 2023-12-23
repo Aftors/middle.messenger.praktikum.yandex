@@ -1,23 +1,25 @@
-<a class="dialog-item">
-    <div class="avatar">
-        <img src="man.png" alt="avatar photo">
+<a class='dialog-item'>
+    <div class='avatar'>
+        <img src='{{avatar}}.png' alt='avatar photo'>
     </div>
-    <div class="dialog-body">
-        <dir class="dialog-title-row">
-            <div class="user-title">
-                 <span class="user-title__title">White chat</span>
+    <div class='dialog-body'>
+        <dir class='dialog-title-row'>
+            <div class='user-title'>
+                <span class='user-title__title'>{{title}}</span>
             </div>
-             <div class="dialog-title-details">
-                <span class="message-status"></span>
-                <span class="message-time">16:38</span>
+             <div class='dialog-title-details'>
+                <span class='message-status'></span>
+                <span class='message-time'>{{time}}</span>
             </div>
         </dir>
-        <div class="dialog-subtitle">
-            <div class="dialog-subtitle-row">
-                 <span class="dialog-subtitle__span">
-                     Друзья, у меня для вас особенный выпуск новостей, И Human Interface Guidelines и Material Design
-                 </span>
-                 <span class="dialog-subtitle-badge"></span>
+        <div class='dialog-subtitle'>
+            <div class='dialog-subtitle-row'>
+                <span class='dialog-subtitle__span'>
+                   {{subtitle}}
+                </span>
+                {{#if badge}}
+                    <div class='dialog-subtitle-badge'>{{badge}}</div>
+                {{/if}}
             </div>
         </div>
     </div>

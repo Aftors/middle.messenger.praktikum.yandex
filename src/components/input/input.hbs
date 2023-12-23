@@ -1,12 +1,14 @@
-<div class="input" >
-    <label class="input__container">
+<div class='input{{style}}' >
+    <label class='input__container{{style}}'>
     <input
-        class="input__element"
-        name="{{name}}"
-        type="{{type}}"
-        placeholder=""
+        class='input__element{{style}}'
+        name='{{name}}'
+        type='{{type}}'
+        placeholder=''
+        value='{{value}}'
+       {{disabled}}
     />
-        <div class="input__label">{{label}}</div>
-        <span class="input__text-error">Недостаточно длинный</span>
+        <div class='input__label{{style}}'>{{label}}</div>
+        <span class='input__text-error'>Incorrect password</span>
     </label>
 </div>

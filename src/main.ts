@@ -5,7 +5,12 @@ import * as Pages from './pages';
 const pages = {
   'login': [ Pages.LoginPage ],
   'create': [ Pages.CreatePage ],
-  'chat': [ Pages.ChatPage ]
+  'chat': [ Pages.ChatPage ],
+  'profile': [ Pages.ProfilePage ],
+  'password': [Pages.PasswordPage],
+  'navigation': [Pages.NavigationPage],
+  'page404': [Pages.Page404],
+  'page500': [Pages.Page500]
 };
 
 Object.entries(Components).forEach(([ name, component ]) => {
@@ -19,7 +24,7 @@ function route(page: string) {
   container.innerHTML = Handlebars.compile(source)(context);
 }
 
-document.addEventListener('DOMContentLoaded', () => route('login'));
+document.addEventListener('DOMContentLoaded', () => route('navigation'));
 
 document.addEventListener('click', e => {
   //@ts-ignore
@@ -42,22 +47,3 @@ document.addEventListener('click', e => {
     e.stopImmediatePropagation();
   }
 });
-
-//  Хард-код для теста работы error input
-
-document.addEventListener('input', e => {
-  //@ts-ignore
-  if( e.target.name == 'password') {
-  //@ts-ignore
-    e.target.className = 'input__error input__element'
-  const node = document.querySelector('input[name=password]')
-  //@ts-ignore
-  node.closest('label').className = 'input__container input__error'
-  }
-  //@ts-ignore
-  if(e.target.value.length === 0) {
-  const node = document.querySelector('input[name=password]')
-  //@ts-ignore
-  node.closest('label').className = 'input__container'
-  }
-})

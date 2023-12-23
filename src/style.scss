@@ -2,17 +2,29 @@
 @import '/src/components/auth-form/auth-form.scss';
 @import '/src/components/auth-link/auth-link.scss';
 @import '/src/components/headline/headline.scss';
-@import '/src/components/dialog-list-conteiner/dialog-list-conteiner.scss';
+@import '/src/components/dialog-conteiner/dialog-conteiner.scss';
+@import '/src/components/profile-conteiner/profile-conteiner.scss';
 @import '/src/components/dialog-list-item/dialog-list-item.scss';
 @import '/src/components/dialog-list-header/dialog-list-header.scss';
 @import '/src/components/search/search.scss';
 @import '/src/components/input/input.scss';
+@import '/src/components/chat-conteiner/chat-conteiner.scss';
+@import '/src/components/chat-header/chat-header.scss';
+@import '/src/components/chat-body/chat-body.scss';
+@import '/src/components/chat-message/chat-message.scss';
+@import '/src/components/chat-footer/chat-footer.scss';
+@import '/src/components/input-message/input-message.scss';
 @import '/src/pages/login/login.scss';
 @import '/src/pages/chat/chat.scss';
+@import '/src/pages/profile/profile.scss';
+@import '/src/pages/password/password.scss';
+@import '/src/pages/navigation/navigation.scss';
+@import '/src/pages/404/page404.scss';
 
 :root {
     --main-color: #FF8C69;
-    --mail-white: #fff;
+    --main-white: #fff;
+    --color-bisque: bisque;
     --second-color: #cbcbcb;
     --gray-bachground: #efefef;
     --chat-background: #fafafa;
@@ -31,10 +43,23 @@
     height: 100vh;
     margin: 0 auto;
     padding: 0;
+    color: var(--text-color);
     font-family: 'SF-regular', -apple-system, system-ui, BlinkMacSystemFont,
     'Segoe UI', Roboto, Ubuntu;
 }
 
-p {
+p, h2 {
   margin: 0;
+}
+
+ul {
+  padding: 0;
+  li {
+    list-style-type: none;
+  }
+}
+
+input:disabled {
+  background-color: var(--main-white);
+  color: var(--text-secondary-color);
 }
