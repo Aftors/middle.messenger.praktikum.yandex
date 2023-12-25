@@ -1,0 +1,40 @@
+.chat-message {
+    display: flex;
+    max-width: 400px;
+    width: fit-content;
+    font-size: 14px;
+    border-radius: 10px 10px 0 10px;
+    background-color: var(--gray-bachground);
+    padding: 12px 12px 24px;
+    border-radius: 12px 12px 12px 0;
+    position: relative;
+    span {
+        color: var(--text-secondary-color);
+        font-size: 10px;
+        font-weight: 400;
+        position: absolute;
+        bottom: 8px;
+        right: 12px;
+    }
+    img {
+        border-radius: 8px;
+        max-height: 600px;
+        max-width: 400px;
+    }
+}
+
+.message-img {
+    padding: 0;
+    span {
+        background-color: var(--gray-bachground);
+        padding: 2px 8px;
+        border-radius: 20px;
+    }
+}
+
+.send {
+    background-color: var(--color-bisque);
+    border-radius: 12px 12px 0 12px;
+    align-self: end;
+    margin-right: 20px;
+}

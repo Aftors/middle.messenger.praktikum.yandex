@@ -1,0 +1,27 @@
+.chat-header {
+    display: flex;
+    box-sizing: border-box;
+    position: absolute;
+    align-items: center;
+    justify-content: space-between;
+    left: 0;
+    right: 0;
+    top: 0;
+    padding: 10px 0;
+    margin: 0 10px;
+    z-index: 9000;
+    background-color: var(--chat-background);
+    gap: 10px;
+    border-bottom: 1px var(--second-color) solid;
+    img {
+        width: 38px;
+        height: 38px;
+    }
+}
+
+.chat-header-dialog {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 10px;
+}

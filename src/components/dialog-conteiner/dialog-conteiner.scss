@@ -1,0 +1,13 @@
+.dialog-conteiner {
+    display: flex;
+    flex-direction: column;
+    min-width: 310px;
+    margin: 10px;
+    border-radius: 15px;
+    background-color: white;
+    box-shadow: 0 0 6px 0 #00000024;
+    overflow-y: scroll;
+    &::-webkit-scrollbar {
+        display: none;
+       }
+}

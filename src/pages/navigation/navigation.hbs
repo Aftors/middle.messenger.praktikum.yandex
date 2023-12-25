@@ -1,0 +1,10 @@
+<nav class='navigation'>
+    <h1>Existing pages</h1>
+    <ul>
+        {{#each (nav)}}
+        <li>
+            <a page='{{page}}'>{{pageName}}</a>
+        </li>
+        {{/each}}
+    </ul>
+</nav>

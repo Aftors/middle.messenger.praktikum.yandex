@@ -1,0 +1,14 @@
+.chat {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 100vw;
+    height: 100%;
+    background-color: var(--chat-background);
+}
+
+.chat-time {
+    text-align: center;
+    font-size: 14px;
+    font-weight: 400;
+}
