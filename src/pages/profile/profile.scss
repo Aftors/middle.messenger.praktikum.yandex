@@ -4,7 +4,7 @@
     align-items: center;
     justify-content: center;
     h2 {
-        margin: 10px 0 5px 0;
+        margin: 10px 0 5px;
     }
     img {
         width: 100px;
@@ -30,7 +30,6 @@
 
 .profile-buttons {
     display: flex;
-    flex-direction: row;
-    flex-wrap: nowrap;
+    flex-flow: row nowrap;
     margin: auto;
 }
