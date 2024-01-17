@@ -24,21 +24,13 @@
 .input__element {
     padding: 0%;
     border: none;
-    border-bottom: var(--text-secondary-color) solid;
+    border-bottom: 1px var(--text-secondary-color) solid;
     font-size: 16px;
     font-weight: 500;
     padding-bottom: 4px;
     &:focus-visible {
         outline: none;
     }
-}
-
-.input__text-error {
-    transform: translateY(-10px);
-    color: var(--error-color);
-    font-size: 10px;
-    font-weight: 400;
-    display: none;
 }
 
 .input__element:focus + .input__label,
@@ -83,4 +75,13 @@
     font-size: 14px;
     font-weight: 500;
     user-select: none;
+}
+
+.input__element__message {
+    border-radius: 30px;
+    background: #efefef;
+    padding: 10px 20px;
+    border: none;
+    width: 100%;
+    outline: none;
 }

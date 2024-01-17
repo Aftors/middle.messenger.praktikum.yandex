@@ -5,6 +5,11 @@
     },
     "extends": ["airbnb-base", "prettier", "stylelint"],
     "parser": "@typescript-eslint/parser",
+    "settings": {
+        "import/parsers": {
+            "@typescript-eslint/parser": [".ts"]
+        }
+    },
     "parserOptions": {
         "ecmaVersion": "latest",
         "sourceType": "module"
@@ -13,6 +18,23 @@
     "ignorePatterns": [],
     "rules": {
         "import/prefer-default-export": "off",
-        "import/no-unresolved": "off"
+        "import/no-unresolved": [
+            2,
+            {
+                "ignore": ["\\?raw$"]
+            }
+        ],
+        "no-underscore-dangle": 0,
+        "n/no-missing-import": 0,
+        "sort-imports": 0,
+        "padding-line-between-statements": 0,
+        "no-console": "off",
+        "lines-between-class-members": 0,
+        "class-methods-use-this": 0,
+        "no-use-before-define": 0,
+        "no-unused-vars": 0,
+        "no-param-reassign": 0,
+        "import/no-cycle": 0, // пока нет нормального роутинга
+        "@typescript-eslint/no-explicit-any": 0
     }
 }
