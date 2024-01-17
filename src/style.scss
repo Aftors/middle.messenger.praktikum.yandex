@@ -1,28 +1,26 @@
-@import '/src/components/button/button.scss';
-@import '/src/components/auth-form/auth-form.scss';
-@import '/src/components/auth-link/auth-link.scss';
-@import '/src/components/headline/headline.scss';
-@import '/src/components/dialog-conteiner/dialog-conteiner.scss';
-@import '/src/components/profile-conteiner/profile-conteiner.scss';
-@import '/src/components/dialog-list-item/dialog-list-item.scss';
-@import '/src/components/dialog-list-header/dialog-list-header.scss';
-@import '/src/components/search/search.scss';
-@import '/src/components/input/input.scss';
-@import '/src/components/chat-conteiner/chat-conteiner.scss';
-@import '/src/components/chat-header/chat-header.scss';
-@import '/src/components/chat-body/chat-body.scss';
-@import '/src/components/chat-message/chat-message.scss';
-@import '/src/components/chat-footer/chat-footer.scss';
-@import '/src/components/input-message/input-message.scss';
-@import '/src/pages/login/login.scss';
-@import '/src/pages/chat/chat.scss';
-@import '/src/pages/profile/profile.scss';
-@import '/src/pages/password/password.scss';
-@import '/src/pages/navigation/navigation.scss';
-@import '/src/pages/404/page404.scss';
+@import '/src/components/button/button';
+@import '/src/components/link/link';
+@import '/src/components/headline/headline';
+@import '/src/components/dialogs/dialogs';
+@import '/src/components/dialog-list-item/dialog-list-item';
+@import '/src/components/dialog-list-header/dialog-list-header';
+@import '/src/components/search/search';
+@import '/src/components/input/input';
+@import '/src/components/error-line/error-line';
+@import '/src/components/chat-conteiner/chat-conteiner';
+@import '/src/components/chat-header/chat-header';
+@import '/src/components/chat-body/chat-body';
+@import '/src/components/chat-message/chat-message';
+@import '/src/components/chat-footer/chat-footer';
+@import '/src/pages/login/login';
+@import '/src/pages/chat/chat';
+@import '/src/pages/profile/profile';
+@import '/src/pages/password/password';
+@import '/src/pages/navigation/navigation';
+@import '/src/pages/404/page404';
 
 :root {
-    --main-color: #FF8C69;
+    --main-color: #ff8c69;
     --main-white: #fff;
     --color-bisque: bisque;
     --second-color: #cbcbcb;
@@ -30,36 +28,43 @@
     --chat-background: #fafafa;
     --error-color: #ff2f2f;
     --text-color: #4a4a4a;
-    --text-secondary-color: #999999;
-  }
+    --text-secondary-color: #999;
+}
 
-#app, body {
+#app,
+body {
     display: flex;
     flex-wrap: wrap;
-    justify-content: center;
+    place-content: center center;
     align-items: center;
-    align-content: center;
     min-height: 100%;
     height: 100vh;
     margin: 0 auto;
     padding: 0;
     color: var(--text-color);
-    font-family: 'SF-regular', -apple-system, system-ui, BlinkMacSystemFont,
-    'Segoe UI', Roboto, Ubuntu;
+    font-family:
+        SF-regular,
+        -apple-system,
+        system-ui,
+        BlinkMacSystemFont,
+        'Segoe UI',
+        Roboto,
+        Ubuntu;
 }
 
-p, h2 {
-  margin: 0;
+p,
+h2 {
+    margin: 0;
 }
 
 ul {
-  padding: 0;
-  li {
-    list-style-type: none;
-  }
+    padding: 0;
+    li {
+        list-style-type: none;
+    }
 }
 
 input:disabled {
-  background-color: var(--main-white);
-  color: var(--text-secondary-color);
+    background-color: var(--main-white);
+    color: var(--text-secondary-color);
 }
