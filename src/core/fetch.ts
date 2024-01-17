@@ -12,6 +12,8 @@ interface IOptions {
     timeout?: number
 }
 
+type Method = (url: string, options?: IOptions) => Promise<any>
+
 const queryStringify = (data: { [key: string]: any }): string => {
     if (typeof data !== 'object') {
         throw new Error('Data must be object')
@@ -22,7 +24,10 @@ const queryStringify = (data: { [key: string]: any }): string => {
 }
 
 class Fetch {
-    get = (url: string, options: IOptions = {}): Promise<XMLHttpRequest> => {
+    get: Method = (
+        url: string,
+        options: IOptions = {}
+    ): Promise<XMLHttpRequest> => {
         const { data } = options
         if (data) {
             const params = queryStringify(data)
@@ -39,11 +44,11 @@ class Fetch {
         )
     }
 
-    post = (url: string, options: IOptions = {}) =>
+    post: Method = (url: string, options: IOptions = {}) =>
         this.request(url, { ...options, method: METHODS.POST }, options.timeout)
-    put = (url: string, options: IOptions = {}) =>
+    put: Method = (url: string, options: IOptions = {}) =>
         this.request(url, { ...options, method: METHODS.PUT }, options.timeout)
-    delete = (url: string, options: IOptions = {}) =>
+    delete: Method = (url: string, options: IOptions = {}) =>
         this.request(
             url,
             { ...options, method: METHODS.DELETE },
