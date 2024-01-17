@@ -7,7 +7,7 @@ export class DialogListHeader extends Block {
             onClick: () => {
                 navigate('login')
             },
-            onProfile: e => {
+            onProfile: (e: Event) => {
                 navigate('profile')
                 e.preventDefault()
                 e.stopPropagation()
