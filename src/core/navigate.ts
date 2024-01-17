@@ -1,6 +1,10 @@
 import * as Pages from '../pages/index.ts'
 
-const pages = {
+interface IPages {
+    [key: string]: any
+}
+
+const pages: IPages = {
     login: Pages.LoginPage,
     create: Pages.CreatePage,
     chat: Pages.ChatPage,
@@ -13,10 +17,9 @@ const pages = {
 
 export function navigate(page: string) {
     const app: HTMLElement | null = document.getElementById('app')
-    // @ts-ignore
     const Component = pages[page]
     const component = new Component()
-    // @ts-ignore
+    if (!app) return
     app.innerHTML = ''
     app?.append(component.getContent()!)
 }
