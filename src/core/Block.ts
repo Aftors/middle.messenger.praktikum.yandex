@@ -42,6 +42,14 @@ class Block<Props extends object = object, Refs extends TypeRef = TypeRef> {
         })
     }
 
+    _removeEvents() {
+        const { events = {} }: any = this.props
+
+        Object.keys(events).forEach(eventName => {
+            this._element?.removeEventListener(eventName, events[eventName])
+        })
+    }
+
     _registerEvents(eventBus: EventBus) {
         eventBus.on(Block.EVENTS.INIT, this._init.bind(this))
         eventBus.on(Block.EVENTS.FLOW_CDM, this._componentDidMount.bind(this))
@@ -117,8 +125,9 @@ class Block<Props extends object = object, Refs extends TypeRef = TypeRef> {
 
     private _render() {
         const fragment = this.compile(this.render(), this.props)
-
         const newElement = fragment.firstElementChild as HTMLElement
+
+        this._removeEvents()
 
         if (this._element) {
             this._element.replaceWith(newElement)

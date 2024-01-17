@@ -5,6 +5,10 @@ export default defineConfig({
     build: {
         outDir: 'dist',
     },
+    publicDir: './static',
+    server: {
+        port: 3000,
+    },
     plugins: [
         checker({
             typescript: true,

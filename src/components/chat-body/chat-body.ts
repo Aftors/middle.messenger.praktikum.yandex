@@ -10,11 +10,11 @@ export class ChatBody extends Block {
 
     protected render() {
         return `
-        <main class='chat-body'>
+        <div class='chat-body'>
         {{#each message}}
             {{{ ChatMessage type=this.type text=this.text img=this.img }}}
         {{/each}}
-        </main>
+        </div>
         `
     }
 }

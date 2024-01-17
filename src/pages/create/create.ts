@@ -69,7 +69,7 @@ export class CreatePage extends Block<Props, Refs> {
         return `
         <div class='container'>
             <form class='auth-form'>
-                {{{ Logo }}}
+                <object type='image/svg+xml' data='peach.svg' class='logo'></object>
                 {{{ Headline label='Registration' }}}
                 {{{ InputAuth name='email' type='text' label='Mail' ref="email" validate=validate.email }}}
                 {{{ InputAuth name='login' type='text' label='Login' ref="login"  validate=validate.login }}}
