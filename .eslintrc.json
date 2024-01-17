@@ -1,7 +1,7 @@
 {
     "env": {
         "browser": true,
-        "node": true
+        "es2021": true
     },
     "extends": ["airbnb-base", "prettier", "stylelint"],
     "parser": "@typescript-eslint/parser",
@@ -15,18 +15,12 @@
         "sourceType": "module"
     },
     "plugins": ["@typescript-eslint"],
-    "ignorePatterns": [],
     "rules": {
         "import/prefer-default-export": "off",
+        "import/no-unresolved": [2, { "ignore": ["\\?raw$"] }],
         "import/no-extraneous-dependencies": [
             "error",
-            { "devDependencies": false }
-        ],
-        "import/no-unresolved": [
-            2,
-            {
-                "ignore": ["\\?raw$"]
-            }
+            { "devDependencies": true }
         ],
         "no-underscore-dangle": 0,
         "n/no-missing-import": 0,
@@ -39,6 +33,12 @@
         "no-unused-vars": 0,
         "no-param-reassign": 0,
         "import/no-cycle": 0, // пока нет нормального роутинга
-        "@typescript-eslint/no-explicit-any": 0
+        "@typescript-eslint/no-explicit-any": 0,
+        "n/no-unpublished-import": 0,
+        "@typescript-eslint/no-unused-vars": "off",
+        "@typescript-eslint/no-this-alias": "off",
+        "@typescript-eslint/ban-ts-ignore": "off",
+        "@typescript-eslint/ban-ts-comments": "off",
+        "no-useless-constructor": "off"
     }
 }
