@@ -109,7 +109,9 @@ class Block<Props extends object = object, Refs extends TypeRef = TypeRef> {
         this.componentWillUnmount()
     }
 
-    componentWillUnmount() {}
+    componentWillUnmount() {
+        this._removeEvents()
+    }
 
     setProps = (nextProps: any) => {
         if (!nextProps) {
@@ -126,9 +128,6 @@ class Block<Props extends object = object, Refs extends TypeRef = TypeRef> {
     private _render() {
         const fragment = this.compile(this.render(), this.props)
         const newElement = fragment.firstElementChild as HTMLElement
-
-        this._removeEvents()
-
         if (this._element) {
             this._element.replaceWith(newElement)
         }
