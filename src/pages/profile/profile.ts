@@ -70,7 +70,7 @@ export class ProfilePage extends Block<Props, Refs> {
     }
     protected render() {
         return `
-            <div class='profile'>
+            <main class='profile'>
                 {{{ Button label='Return' type='return' onClick=onReturn}}}
                 <div class='profile-conteiner'>
                     <div class='profile-header'>
@@ -103,7 +103,7 @@ export class ProfilePage extends Block<Props, Refs> {
                         {{{ Button label='Сhange password' type='edit' onClick=onClick}}}
                     </div>
                 </div>
-            </div>
+            </main>
 
 
         `

@@ -67,7 +67,7 @@ export class CreatePage extends Block<Props, Refs> {
 
     protected render() {
         return `
-        <div class='container'>
+        <main class='container'>
             <form class='auth-form'>
                 <object type='image/svg+xml' data='peach.svg' class='logo'></object>
                 {{{ Headline label='Registration' }}}
@@ -81,7 +81,7 @@ export class CreatePage extends Block<Props, Refs> {
                 {{{ Button label='Create' type='basic' onClick=onCreate }}}
                 {{{ Link text='Already have an account?' label='Login in here' href='login' onClick=onClick }}}
             </form>
-        </div>
+        </main>
  
         `
     }

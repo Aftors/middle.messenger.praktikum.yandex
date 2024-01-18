@@ -9,10 +9,10 @@ export class ChatPage extends Block {
     }
     protected render() {
         return `
-        <div class='chat'>
+        <main class='chat'>
             {{{ Dialogs listDialog=listDialog }}}
             {{{ ChatConteiner }}}
-        </div>
+        </main>
         `
     }
 }

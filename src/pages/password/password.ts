@@ -40,7 +40,7 @@ export class PasswordPage extends Block<Props, Refs> {
     }
     protected render() {
         return `
-        <div class='password'>
+        <main class='password'>
                 <h2>Password</h2>
                 <div class='profile-item-list'>
                     <ul>
@@ -66,7 +66,7 @@ export class PasswordPage extends Block<Props, Refs> {
                     {{{ Button label='Return' type='edit' onClick=onClick}}}
                     {{{ Button label='Save password' type='edit' onClick=onSave}}}
                 </div>
-    </div>
+    </main>
     
         `
     }

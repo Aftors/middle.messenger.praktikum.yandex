@@ -48,7 +48,7 @@ export class LoginPage extends Block<IProps, Refs> {
 
     protected render() {
         return `
-        <div class="container">
+        <main class="container">
             <form class='auth-form'>
                 <object type='image/svg+xml' data='peach.svg' class='logo'></object>
                 {{{ Headline label='Sign in' span='Peach' }}}
@@ -57,7 +57,7 @@ export class LoginPage extends Block<IProps, Refs> {
                 {{{ Button name='sign in' label='Sign in' type='basic' onClick=onLogin }}}
                 {{{ Link text="Don't have an account?" label='Create in here'  onClick=onClick}}}
             </form>
-        </div>
+        </main>
         `
     }
 }
