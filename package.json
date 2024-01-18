@@ -1,26 +1,41 @@
 {
-  "name": "sprint_1",
-  "private": true,
-  "version": "0.1.0",
-  "type": "module",
-  "scripts": {
-    "dev": "vite",
-    "build": "tsc && vite build",
-    "preview": "vite preview",
-    "start": "tsc && vite build && node express.js"
-  },
-  "devDependencies": {
-    "handlebars": "^4.7.8",
-    "sass": "^1.69.5",
-    "typescript": "^5.2.2",
-    "vite": "^5.0.8",
-    "vite-plugin-handlebars": "^1.6.0"
-  },
-  "engines": {
-    "node": "^20.7.0",
-    "npm": "10.1.0"
-  },
-  "dependencies": {
-    "express": "^4.18.2"
-  }
+    "name": "sprint_2",
+    "private": false,
+    "version": "0.2.0",
+    "type": "module",
+    "scripts": {
+        "dev": "vite",
+        "build": "tsc --noEmit && vite build",
+        "preview": "vite preview",
+        "start": "tsc && vite build && node express.js",
+        "stylelint": "stylelint '**/*{.css,.scss}'",
+        "lint": "eslint src --ext .ts,.tsx,.js"
+    },
+    "devDependencies": {
+        "@typescript-eslint/eslint-plugin": "^6.18.1",
+        "@typescript-eslint/parser": "^6.18.1",
+        "eslint": "^8.56.0",
+        "eslint-config-airbnb-base": "^15.0.0",
+        "eslint-config-prettier": "^9.1.0",
+        "eslint-config-stylelint": "^20.0.0",
+        "eslint-plugin-import": "^2.29.1",
+        "prettier": "3.1.1",
+        "sass": "^1.69.5",
+        "stylelint": "^16.1.0",
+        "stylelint-config-standard": "^36.0.0",
+        "stylelint-config-standard-scss": "^13.0.0",
+        "typescript": "^5.2.2",
+        "vite": "^5.0.8",
+        "vite-plugin-checker": "^0.6.2",
+        "vite-plugin-handlebars": "^1.6.0"
+    },
+    "engines": {
+        "node": "^20.7.0",
+        "npm": "10.1.0"
+    },
+    "dependencies": {
+        "express": "^4.18.2",
+        "handlebars": "^4.7.8",
+        "nanoid": "^5.0.4"
+    }
 }
