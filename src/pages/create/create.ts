@@ -1,7 +1,9 @@
 import Block from '../../core/Block.ts'
 import { InputAuth } from '../../components/index.ts'
 import * as validators from '../../core/validator.ts'
-import { navigate } from '../../core/navigate.ts'
+import { signup } from '../../services/auth.ts'
+import router from '../../router/router.ts'
+import { ERoutes } from '../../types/enums.ts'
 
 interface Props {
     validate: {
@@ -46,19 +48,18 @@ export class CreatePage extends Block<Props, Refs> {
                     firstName &&
                     secondName
                 ) {
-                    console.log({
-                        firstName,
-                        secondName,
+                    signup({
                         login,
                         password,
                         email,
+                        first_name: firstName,
+                        second_name: secondName,
                         phone,
                     })
-                    navigate('chat')
                 }
             },
             onClick: e => {
-                navigate('login')
+                router.go(ERoutes.LOGIN)
                 e.preventDefault()
                 e.stopPropagation()
             },

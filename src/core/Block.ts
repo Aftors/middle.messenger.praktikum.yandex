@@ -205,7 +205,7 @@ class Block<Props extends object = object, Refs extends TypeRef = TypeRef> {
     }
 
     show() {
-        this.getContent()!.style.display = 'block'
+        this.getContent()!.style.display = 'flex'
     }
 
     hide() {

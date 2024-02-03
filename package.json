@@ -1,7 +1,7 @@
 {
-    "name": "sprint_2",
+    "name": "sprint_3",
     "private": false,
-    "version": "0.2.0",
+    "version": "0.3.0",
     "type": "module",
     "scripts": {
         "dev": "vite",
@@ -9,7 +9,8 @@
         "preview": "vite preview",
         "start": "tsc && vite build && node express.js",
         "stylelint": "stylelint '**/*{.css,.scss}'",
-        "lint": "eslint src --ext .ts,.tsx,.js"
+        "lint": "eslint src --ext .ts,.tsx,.js",
+        "lint:fix": "eslint --fix --ext .ts,.js ."
     },
     "devDependencies": {
         "@typescript-eslint/eslint-plugin": "^6.18.1",

@@ -1,7 +1,8 @@
 import Block from '../../core/Block.ts'
 import { passwordList } from '../../props/props.password.ts'
 import { InputAuth } from '../../components/index.ts'
-import { navigate } from '../../core/navigate.ts'
+import router from '../../router/router.ts'
+import { ERoutes } from '../../types/enums.ts'
 
 interface Props {
     passwordList: unknown
@@ -30,11 +31,11 @@ export class PasswordPage extends Block<Props, Refs> {
                         passwordTwo,
                         passwordOld,
                     })
-                    navigate('profile')
+                    router.go(ERoutes.SETTINGS)
                 }
             },
             onClick: () => {
-                navigate('profile')
+                router.go(ERoutes.SETTINGS)
             },
         })
     }

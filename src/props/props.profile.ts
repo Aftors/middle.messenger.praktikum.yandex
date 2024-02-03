@@ -12,7 +12,6 @@ const validate = {
 export const list = [
     {
         label: 'Email',
-        value: 'white@yandex.ru',
         type: 'text',
         name: 'email',
         disabled: true,
@@ -21,7 +20,6 @@ export const list = [
     },
     {
         label: 'Login',
-        value: 'whiteBlack',
         type: 'text',
         name: 'login',
         disabled: true,
@@ -30,7 +28,6 @@ export const list = [
     },
     {
         label: 'Name',
-        value: 'White',
         type: 'text',
         name: 'first_name',
         disabled: true,
@@ -39,7 +36,6 @@ export const list = [
     },
     {
         label: 'Second name',
-        value: 'Black',
         type: 'text',
         name: 'second_name',
         disabled: true,
@@ -48,7 +44,6 @@ export const list = [
     },
     {
         label: 'Display name',
-        value: 'Cucumber',
         type: 'text',
         name: 'display_name',
         disabled: true,
@@ -56,7 +51,6 @@ export const list = [
     },
     {
         label: 'Phone',
-        value: '+798184543223',
         type: 'text',
         name: 'phone',
         disabled: true,

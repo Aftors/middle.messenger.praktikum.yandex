@@ -17,3 +17,5 @@ export { ChatFooter } from './chat-footer/chat-footer.ts'
 export { ChatMessage } from './chat-message/chat-message.ts'
 
 export { ErrorLine } from './error-line/error-line.ts'
+
+export { Modal } from './modal/modal.ts'

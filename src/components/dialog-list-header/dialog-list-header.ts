@@ -1,14 +1,16 @@
 import Block from '../../core/Block.ts'
-import { navigate } from '../../core/navigate.ts'
+import router from '../../router/router.ts'
+import { logout } from '../../services/auth.ts'
+import { ERoutes } from '../../types/enums.ts'
 
 export class DialogListHeader extends Block {
     constructor() {
         super({
             onClick: () => {
-                navigate('login')
+                logout()
             },
             onProfile: (e: Event) => {
-                navigate('profile')
+                router.go(ERoutes.SETTINGS)
                 e.preventDefault()
                 e.stopPropagation()
             },

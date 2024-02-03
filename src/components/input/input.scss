@@ -2,6 +2,9 @@
     margin-top: 20px;
     padding: 0 20px;
 }
+.input:focus {
+    outline: none;
+}
 
 .input__container {
     display: flex;

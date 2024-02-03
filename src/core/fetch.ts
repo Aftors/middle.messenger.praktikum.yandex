@@ -12,93 +12,65 @@ interface IOptions {
     timeout?: number
 }
 
-type Method = (url: string, options?: IOptions) => Promise<any>
+type OptionsWithoutMethod = Omit<IOptions, 'method'>
 
-const queryStringify = (data: { [key: string]: any }): string => {
-    if (typeof data !== 'object') {
-        throw new Error('Data must be object')
-    }
-    return `?${Object.entries(data)
-        .map(([key, value]) => `${key}=${value}`)
-        .join('&')}`
-}
+export class Fetch {
+    protected HOST = 'https://ya-praktikum.tech/api/v2'
+    private apiUrl: string = ''
 
-class Fetch {
-    get: Method = (
-        url: string,
-        options: IOptions = {}
-    ): Promise<XMLHttpRequest> => {
-        const { data } = options
-        if (data) {
-            const params = queryStringify(data)
-            return this.request(
-                url + params,
-                { ...options, method: METHODS.GET },
-                options.timeout
-            )
-        }
-        return this.request(
-            url,
-            { ...options, method: METHODS.GET },
-            options.timeout
-        )
+    constructor(apiPath: string) {
+        this.apiUrl = `${this.HOST}${apiPath}`
     }
 
-    post: Method = (url: string, options: IOptions = {}) =>
-        this.request(url, { ...options, method: METHODS.POST }, options.timeout)
-    put: Method = (url: string, options: IOptions = {}) =>
-        this.request(url, { ...options, method: METHODS.PUT }, options.timeout)
-    delete: Method = (url: string, options: IOptions = {}) =>
-        this.request(
-            url,
-            { ...options, method: METHODS.DELETE },
-            options.timeout
-        )
-
-    request = (
+    get<TResponse>(
         url: string,
-        options: IOptions = {},
-        timeout = 5000
-    ): Promise<XMLHttpRequest> => {
-        const { method, data, headers = {} } = options
-
-        return new Promise((resolve, reject) => {
-            if (!method) {
-                return
-            }
-
-            const xhr = new XMLHttpRequest()
-
-            xhr.open(method, url)
-
-            xhr.onload = () => {
-                resolve(xhr)
-            }
-
-            xhr.onabort = () => reject(new Error('User aborted request'))
-            xhr.onerror = () => reject(new Error('Network error occurred'))
-            xhr.ontimeout = () => reject(new Error('Request timed out'))
-
-            if (headers) {
-                // eslint-disable-next-line array-callback-return
-                Object.entries(headers).map(([key, value]) => {
-                    xhr.setRequestHeader(key, value)
-                })
-            }
-
-            if (!method) {
-                xhr.send()
-            }
-
-            if (method === METHODS.GET || !data) {
-                xhr.send()
-            } else {
-                xhr.send(JSON.stringify(data))
-            }
-
-            setTimeout(() => {
-                reject(new Error('время вышло!'))
-            }, timeout)
+        options: OptionsWithoutMethod = {}
+    ): Promise<TResponse> {
+        return this.request<TResponse>(`${this.apiUrl}${url}`, {
+            ...options,
+            method: METHODS.GET,
         })
+    }
+
+    post<TResponse>(
+        url: string,
+        options: OptionsWithoutMethod = {}
+    ): Promise<TResponse> {
+        return this.request<TResponse>(`${this.apiUrl}${url}`, {
+            ...options,
+            method: METHODS.POST,
+        })
+    }
+
+    put<TResponse>(
+        url: string,
+        options: OptionsWithoutMethod = {}
+    ): Promise<TResponse> {
+        return this.request<TResponse>(`${this.apiUrl}${url}`, {
+            ...options,
+            method: METHODS.PUT,
+        })
+    }
+
+    async request<TResponse>(
+        url: string,
+        options: IOptions = { method: METHODS.GET }
+    ): Promise<TResponse> {
+        const { method, data } = options
+
+        const response = await fetch(url, {
+            method,
+            credentials: 'include',
+            mode: 'cors',
+            headers: { 'Content-Type': 'application/json' },
+            body: data ? JSON.stringify(data) : null,
+        })
+
+        const isJson = response.headers
+            .get('content-type')
+            ?.includes('application/json')
+        const resultData = (await isJson) ? response.json() : null
+
+        return resultData as unknown as TResponse
     }
 }
