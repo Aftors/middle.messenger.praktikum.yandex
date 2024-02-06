@@ -4,6 +4,7 @@ import { Input } from '../input/input.ts'
 interface IProps {
     onBlur?: () => void
     validate?: (value: string) => string
+    onSendMessage: (e: Event) => void
 }
 
 type Ref = {
@@ -14,6 +15,9 @@ export class InputMessage extends Block<IProps, Ref> {
     constructor() {
         super({
             onBlur: () => this.validate(),
+            onSendMessage: event => {
+                event.preventDefault()
+            },
         })
     }
 
@@ -35,8 +39,9 @@ export class InputMessage extends Block<IProps, Ref> {
 
     protected render() {
         return `
-        <form class='input-message-form' >
-            {{{ Input name='message' style='__message' placeholder='Message' ref="input" onBlur=onBlur}}}
+        <form class='input-message-form' onsubmit=onSendMessage>
+            {{{ Input name='message' style='__message' placeholder='Message' id='areaMessages' ref="input" onBlur=onBlur}}}
+            {{{ Button name='send' type='send' label='➞' onClick=onSendMessage id='send-message' }}}
         </form>
         `
     }

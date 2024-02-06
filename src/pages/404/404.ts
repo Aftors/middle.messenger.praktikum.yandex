@@ -1,11 +1,12 @@
 import Block from '../../core/Block.ts'
-import { navigate } from '../../core/navigate.ts'
+import router from '../../router/router.ts'
+import { ERoutes } from '../../types/enums.ts'
 
 export class Page404 extends Block {
     constructor() {
         super({
             onClick: () => {
-                navigate('chat')
+                router.go(ERoutes.CHATS)
             },
         })
     }
@@ -16,7 +17,7 @@ export class Page404 extends Block {
             <h2>
                 <span>P.</span>chat got lost
             </h2>
-            {{{ Logo }}}
+            <object type='image/svg+xml' data='peach.svg' class='logo'></object>
             {{{ Button label='Return' type='edit' page='chat' onClick=onClick }}}
         </div>
 

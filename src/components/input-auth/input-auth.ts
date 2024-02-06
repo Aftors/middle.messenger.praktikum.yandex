@@ -1,4 +1,5 @@
 import Block from '../../core/Block.ts'
+import { connect } from '../../core/connect.ts'
 import { ErrorLine } from '../error-line/error-line.ts'
 import { Input } from '../input/input.ts'
 
@@ -8,10 +9,13 @@ interface IInput {
     type?: string
     error: string
     disabled?: string
-    value: string
+    value?: { [key: string]: string } | string
     name: string
+    user?: { [key: string]: string }
+    userGet: boolean
     onBlur?: () => void
     validate?: (value: string) => string
+    me: { [key: string]: string }
 }
 
 type Ref = {
@@ -24,6 +28,7 @@ export class InputAuth extends Block<IInput, Ref> {
         super({
             ...props,
             onBlur: () => this.validate(),
+            user: window.store.getState('user'),
         })
     }
 
@@ -66,3 +71,5 @@ export class InputAuth extends Block<IInput, Ref> {
         `
     }
 }
+
+export default connect(({ user }) => ({ user }))(InputAuth)

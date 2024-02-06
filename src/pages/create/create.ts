@@ -1,7 +1,9 @@
 import Block from '../../core/Block.ts'
 import { InputAuth } from '../../components/index.ts'
 import * as validators from '../../core/validator.ts'
-import { navigate } from '../../core/navigate.ts'
+import { signup } from '../../services/auth.ts'
+import router from '../../router/router.ts'
+import { ERoutes } from '../../types/enums.ts'
 
 interface Props {
     validate: {
@@ -46,19 +48,18 @@ export class CreatePage extends Block<Props, Refs> {
                     firstName &&
                     secondName
                 ) {
-                    console.log({
-                        firstName,
-                        secondName,
+                    signup({
                         login,
                         password,
                         email,
+                        first_name: firstName,
+                        second_name: secondName,
                         phone,
                     })
-                    navigate('chat')
                 }
             },
             onClick: e => {
-                navigate('login')
+                router.go(ERoutes.LOGIN)
                 e.preventDefault()
                 e.stopPropagation()
             },
@@ -67,9 +68,9 @@ export class CreatePage extends Block<Props, Refs> {
 
     protected render() {
         return `
-        <div class='container'>
+        <main class='container'>
             <form class='auth-form'>
-                {{{ Logo }}}
+                <object type='image/svg+xml' data='peach.svg' class='logo'></object>
                 {{{ Headline label='Registration' }}}
                 {{{ InputAuth name='email' type='text' label='Mail' ref="email" validate=validate.email }}}
                 {{{ InputAuth name='login' type='text' label='Login' ref="login"  validate=validate.login }}}
@@ -81,7 +82,7 @@ export class CreatePage extends Block<Props, Refs> {
                 {{{ Button label='Create' type='basic' onClick=onCreate }}}
                 {{{ Link text='Already have an account?' label='Login in here' href='login' onClick=onClick }}}
             </form>
-        </div>
+        </main>
  
         `
     }

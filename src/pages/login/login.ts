@@ -1,7 +1,9 @@
 import Block from '../../core/Block.ts'
 import { InputAuth } from '../../components/index.ts'
 import * as validators from '../../core/validator.ts'
-import { navigate } from '../../core/navigate.ts'
+import { signin } from '../../services/auth.ts'
+import router from '../../router/router.ts'
+import { ERoutes } from '../../types/enums.ts'
 
 interface IProps {
     validate: {
@@ -32,14 +34,15 @@ export class LoginPage extends Block<IProps, Refs> {
                 if (!login || !password) {
                     return
                 }
-                console.log({
+
+                signin({
                     login,
                     password,
-                })
-                navigate('chat')
+                }).catch(error => console.log(error))
+                this.refs.password.setProps({ value: '' })
             },
             onClick: e => {
-                navigate('create')
+                router.go(ERoutes.REGISTER)
                 e.preventDefault()
                 e.stopPropagation()
             },
@@ -48,7 +51,7 @@ export class LoginPage extends Block<IProps, Refs> {
 
     protected render() {
         return `
-        <div class="container">
+        <main class="container">
             <form class='auth-form'>
                 <object type='image/svg+xml' data='peach.svg' class='logo'></object>
                 {{{ Headline label='Sign in' span='Peach' }}}
@@ -57,7 +60,7 @@ export class LoginPage extends Block<IProps, Refs> {
                 {{{ Button name='sign in' label='Sign in' type='basic' onClick=onLogin }}}
                 {{{ Link text="Don't have an account?" label='Create in here'  onClick=onClick}}}
             </form>
-        </div>
+        </main>
         `
     }
 }

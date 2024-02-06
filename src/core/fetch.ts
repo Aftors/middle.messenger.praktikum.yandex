@@ -12,6 +12,8 @@ interface IOptions {
     timeout?: number
 }
 
+type OptionsWithoutMethod = Omit<IOptions, 'method'>
+
 const queryStringify = (data: { [key: string]: any }): string => {
     if (typeof data !== 'object') {
         throw new Error('Data must be object')
@@ -21,79 +23,112 @@ const queryStringify = (data: { [key: string]: any }): string => {
         .join('&')}`
 }
 
-class Fetch {
-    get = (url: string, options: IOptions = {}): Promise<XMLHttpRequest> => {
-        const { data } = options
-        if (data) {
-            const params = queryStringify(data)
-            return this.request(
-                url + params,
-                { ...options, method: METHODS.GET },
-                options.timeout
-            )
-        }
-        return this.request(
-            url,
-            { ...options, method: METHODS.GET },
-            options.timeout
-        )
+export class Fetch {
+    protected HOST = 'https://ya-praktikum.tech/api/v2'
+    private apiUrl: string = ''
+
+    constructor(apiPath: string) {
+        this.apiUrl = `${this.HOST}${apiPath}`
     }
 
-    post = (url: string, options: IOptions = {}) =>
-        this.request(url, { ...options, method: METHODS.POST }, options.timeout)
-    put = (url: string, options: IOptions = {}) =>
-        this.request(url, { ...options, method: METHODS.PUT }, options.timeout)
-    delete = (url: string, options: IOptions = {}) =>
-        this.request(
-            url,
-            { ...options, method: METHODS.DELETE },
-            options.timeout
-        )
+    get<TResponse>(
+        url: string,
+        options: OptionsWithoutMethod = {}
+    ): Promise<TResponse> {
+        return this.request<TResponse>(`${this.apiUrl}${url}`, {
+            ...options,
+            method: METHODS.GET,
+        })
+    }
 
-    request = (
+    post<TResponse>(
+        url: string,
+        options: OptionsWithoutMethod = {}
+    ): Promise<TResponse> {
+        return this.request<TResponse>(`${this.apiUrl}${url}`, {
+            ...options,
+            method: METHODS.POST,
+        })
+    }
+
+    put<TResponse>(
+        url: string,
+        options: OptionsWithoutMethod = {}
+    ): Promise<TResponse> {
+        return this.request<TResponse>(`${this.apiUrl}${url}`, {
+            ...options,
+            method: METHODS.PUT,
+        })
+    }
+
+    delete<TResponse>(
+        url: string,
+        options: OptionsWithoutMethod = {}
+    ): Promise<TResponse> {
+        return this.request<TResponse>(`${this.apiUrl}${url}`, {
+            ...options,
+            method: METHODS.DELETE,
+        })
+    }
+
+    request = <TResponse>(
         url: string,
         options: IOptions = {},
         timeout = 5000
-    ): Promise<XMLHttpRequest> => {
+    ): Promise<TResponse> => {
         const { method, data, headers = {} } = options
 
         return new Promise((resolve, reject) => {
             if (!method) {
+                reject(new Error('No method'))
                 return
             }
 
             const xhr = new XMLHttpRequest()
+            const isGet = method === METHODS.GET
 
-            xhr.open(method, url)
+            if (headers) {
+                Object.entries(headers).forEach(([key, value]) => {
+                    xhr.setRequestHeader(key, value)
+                })
+            }
 
-            xhr.onload = () => {
-                resolve(xhr)
+            xhr.open(
+                method,
+                isGet && !!data ? `${url}${queryStringify(data)}` : url
+            )
+
+            if (!(data instanceof FormData)) {
+                xhr.setRequestHeader('Content-Type', 'application/json')
+            }
+
+            xhr.withCredentials = true
+            xhr.responseType = 'json'
+
+            xhr.onreadystatechange = () => {
+                if (xhr.readyState === XMLHttpRequest.DONE) {
+                    if (
+                        xhr.status === 0 ||
+                        (xhr.status >= 200 && xhr.status < 400)
+                    ) {
+                        resolve(xhr.response)
+                    } else {
+                        reject(xhr.response)
+                    }
+                }
             }
 
             xhr.onabort = () => reject(new Error('User aborted request'))
             xhr.onerror = () => reject(new Error('Network error occurred'))
             xhr.ontimeout = () => reject(new Error('Request timed out'))
 
-            if (headers) {
-                // eslint-disable-next-line array-callback-return
-                Object.entries(headers).map(([key, value]) => {
-                    xhr.setRequestHeader(key, value)
-                })
-            }
+            xhr.timeout = timeout
 
-            if (!method) {
-                xhr.send()
-            }
-
-            if (method === METHODS.GET || !data) {
+            if (isGet || !data) {
                 xhr.send()
             } else {
-                xhr.send(JSON.stringify(data))
+                xhr.send(data instanceof FormData ? data : JSON.stringify(data))
             }
-
-            setTimeout(() => {
-                reject(new Error('время вышло!'))
-            }, timeout)
         })
     }
 }

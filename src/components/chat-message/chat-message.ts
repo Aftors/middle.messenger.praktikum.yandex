@@ -13,7 +13,7 @@ export class ChatMessage extends Block<IPropsMessage> {
         })
     }
     protected render() {
-        const { type, img, text } = this.props
+        const { type = '', img, text } = this.props
         return `
         <div class='chat-message ${type}'>
             {{#if img}}

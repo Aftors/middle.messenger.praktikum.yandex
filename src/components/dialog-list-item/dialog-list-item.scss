@@ -6,7 +6,8 @@
     transition: all 0.2s;
     border-top: var(--gray-bachground) solid;
 }
-.dialog-item:hover {
+.dialog-item:hover,
+.selected {
     border-radius: 30px 0 0 30px;
     background-color: var(--color-bisque);
 }
