@@ -9,16 +9,22 @@ const initApp = async () => {
     try {
         const me: UserDTO = await getMe()
         window.store.set({ user: transformUser(me) })
+        const chats = await getChats()
+        window.store.set({ chats })
+        if (
+            window.location.pathname === '/' ||
+            window.location.pathname === '/sign-up'
+        ) {
+            router.go(ERoutes.CHATS)
+        } else {
+            router.go(window.location.pathname)
+        }
     } catch (error) {
-        router.go(ERoutes.LOGIN)
-        return
-    }
-    const chats = await getChats()
-    window.store.set({ chats })
-    if (window.location.pathname === '/') {
-        router.go(ERoutes.CHATS)
-    } else {
-        router.go(window.location.pathname)
+        if (window.location.pathname === '/sign-up') {
+            router.go(ERoutes.REGISTER)
+        } else {
+            router.go(ERoutes.LOGIN)
+        }
     }
 }
 
