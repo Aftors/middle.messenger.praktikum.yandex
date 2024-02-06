@@ -9,10 +9,8 @@ interface IInput {
     type?: string
     error: string
     disabled?: string
-    value?: { [key: string]: string } | string
     name: string
     user?: { [key: string]: string }
-    userGet: boolean
     onBlur?: () => void
     validate?: (value: string) => string
     me: { [key: string]: string }
@@ -23,7 +21,7 @@ type Ref = {
     error: ErrorLine
 }
 
-export class InputAuth extends Block<IInput, Ref> {
+export class InputSettings extends Block<IInput, Ref> {
     constructor(props: IInput) {
         super({
             ...props,
@@ -56,9 +54,16 @@ export class InputAuth extends Block<IInput, Ref> {
             label,
             type = 'text',
             disabled = false,
-            value = '',
             name = '',
+            user,
         } = this.props
+        let value = ''
+        if (user === undefined || null) {
+            value = ''
+        }
+        if (user) {
+            value = user[name]
+        }
         return `
         <div class='input${style} {{#if error}}input__error{{/if}}' >
         <label class='input__container${style}'>
@@ -72,4 +77,4 @@ export class InputAuth extends Block<IInput, Ref> {
     }
 }
 
-export default connect(({ user }) => ({ user }))(InputAuth)
+export default connect(({ user }) => ({ user }))(InputSettings)

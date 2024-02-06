@@ -1,22 +1,11 @@
 import { Fetch } from '../core/fetch.ts'
+import { APIError } from '../types/apiError.ts'
+import {
+    CreateUser,
+    LoginRequestData,
+    SignUpResponse,
+} from '../types/apiTipes.ts'
 import { UserDTO } from './dto/user-dto.ts'
-
-export type APIError = {
-    reason: string
-}
-
-export type SignUpResponse = {
-    id: number
-}
-
-export type CreateUser = Omit<UserDTO, 'avatar' | 'display_name' | 'id'> & {
-    password: string
-}
-
-export type LoginRequestData = {
-    login: string
-    password: string
-}
 
 const authApi = new Fetch('/auth')
 

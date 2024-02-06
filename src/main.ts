@@ -11,23 +11,25 @@ declare global {
     interface Window {
         store: Store<AppState>
     }
-
-    type Nullable<T> = T | null
 }
 
 const initState: AppState = {
     error: null,
     user: {
         id: 0,
-        login: 'ff',
-        first_name: 'ff',
-        second_name: 'ff',
-        display_name: '',
+        login: '',
+        firstName: '',
+        secondName: '',
+        displayName: '',
         avatar: '',
         phone: '',
-        email: 'fff@fff',
+        email: '',
     },
     openModal: false,
+    openSettingsChat: false,
+    chats: [],
+    selectedChat: null,
+    chatRun: false,
 }
 
 window.store = new Store<AppState>(initState)
@@ -36,9 +38,11 @@ registerComponent('Headline', Components.HeadLine)
 registerComponent('Button', Components.Button)
 registerComponent('Link', Components.Link)
 registerComponent('Input', Components.Input)
+registerComponent('Avatar', Components.Avatar)
 registerComponent('ErrorLine', Components.ErrorLine)
 registerComponent('InputAuth', Components.InputAuth)
 registerComponent('InputMessage', Components.InputMessage)
+registerComponent('InputSettings', Components.InputSettings)
 
 registerComponent('Dialogs', Components.Dialogs)
 registerComponent('DialogListHeader', Components.DialogListHeader)
@@ -49,8 +53,8 @@ registerComponent('ChatConteiner', Components.ChatConteiner)
 registerComponent('ChatHeader', Components.ChatHeader)
 registerComponent('ChatBody', Components.ChatBody)
 registerComponent('ChatFooter', Components.ChatFooter)
-registerComponent('InputMessage', Components.InputMessage)
 registerComponent('ChatMessage', Components.ChatMessage)
+registerComponent('ModalChat', Components.ModalChat)
 registerComponent('Modal', Components.Modal)
 
 window.addEventListener('popstate', () => {
@@ -76,6 +80,7 @@ router
     .use(ERoutes.REGISTER, pages.create)
     .use(ERoutes.CHATS, pages.chat)
     .use(ERoutes.SETTINGS, pages.profile)
+    .use(ERoutes.PASSWORD, pages.password)
     .use(ERoutes.NOT_FOUND_PAGE, pages.page404)
     .use(ERoutes.SERVER_ERROR_PAGE, pages.page500)
 

@@ -3,7 +3,7 @@ import { InputAuth } from '../../components/index.ts'
 import router from '../../router/router.ts'
 import { ERoutes } from '../../types/enums.ts'
 import { list } from '../../props/props.profile.ts'
-import { change } from '../../services/settings.ts'
+import { change, changeAvatar } from '../../services/settings.ts'
 import { connect } from '../../core/connect.ts'
 
 interface Props {
@@ -17,8 +17,9 @@ interface Props {
     onClick?: (e: Event) => void
     onSave: (e: Event) => void
     onReturn: (e: Event) => void
+    onChange: (e: Event) => void
     events?: {}
-    user: {}
+    user: { [key: string]: string }
 }
 
 type Refs = {
@@ -27,10 +28,10 @@ type Refs = {
 
 export class ProfilePage extends Block<Props, Refs> {
     constructor(props: Props) {
-        console.log(props.user)
         super({
             ...props,
             list,
+
             onSave: e => {
                 e.preventDefault()
                 const login = this.refs.login.value()
@@ -76,38 +77,39 @@ export class ProfilePage extends Block<Props, Refs> {
                 }
             },
             onClick: () => {
-                router.go(ERoutes.SETTINGS)
+                router.go(ERoutes.PASSWORD)
             },
             onReturn: () => {
                 router.go(ERoutes.CHATS)
             },
             displayName: window.store.getStateByID('user', 'display_name'),
+            onChange: e => {
+                // @ts-ignore
+                changeAvatar(e.target.files[0])
+            },
         })
     }
+
     protected render() {
-        const { user } = this.props
-        console.log(user)
         return `
             <main class='profile'>
                 {{{ Button label='Return' type='return' onClick=onReturn }}}
                 <div class='profile-conteiner'>
                     <div class='profile-header'>
-                        <img class='dialog-list__logo' src='man.png' alt='avatar' page='profile'>
-                        <h2>{{displayName}}</h2>
-                        <p>+7 (981) 755-85-28</p>
+                       {{{Avatar ref="file" onChange=onChange avatar=user.avatar}}}
+                        <h2>{{user.displayName}}</h2>
                     </div>
                     <div class='profile-item-list'>
                         <ul>
                             <form class='profile-form' name='profile-form'>
                                 {{#each list}}
                                      <li>
-                                        {{{ InputAuth 
+                                        {{{ InputSettings 
                                             style='__profile' 
                                             disabled='disabled' 
                                             label=this.label
                                             type=this.type 
                                             name=this.name
-                                            userGet=true
                                             ref=this.ref
                                             validate=this.validate
                                             disabled=this.disabled }}}

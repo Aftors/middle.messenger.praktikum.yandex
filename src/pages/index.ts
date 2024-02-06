@@ -1,7 +1,7 @@
 export { LoginPage } from './login/login.ts'
 export { CreatePage } from './create/create.ts'
 export { ChatPage } from './chat/chat.ts'
-export { ProfilePage } from './profile/profile.ts'
+export { default as ProfilePage } from './profile/profile.ts'
 export { Navigation } from './navigation/navigation.ts'
 export { PasswordPage } from './password/password.ts'
 export { Page404 } from './404/404.ts'

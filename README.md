@@ -1,6 +1,6 @@
 # ![alt logo](Aftors/middle.messenger.praktikum.yandex/tree/sprint_1/src/../../../../../static/peach.svg) Peach chat
 
-![Static Badge](https://img.shields.io/badge/ready-50%25-orange)
+![Static Badge](https://img.shields.io/badge/ready-75%25-orange)
 
 ![Static Badge](https://img.shields.io/badge/build-passing-brightgreen)
 ![Static Badge](https://img.shields.io/badge/node-%5E20.7.0-blue)

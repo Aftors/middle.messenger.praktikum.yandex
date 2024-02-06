@@ -29,7 +29,7 @@ export const list = [
     {
         label: 'Name',
         type: 'text',
-        name: 'first_name',
+        name: 'firstName',
         disabled: true,
         validate: validate.name,
         ref: 'firstName',
@@ -37,7 +37,7 @@ export const list = [
     {
         label: 'Second name',
         type: 'text',
-        name: 'second_name',
+        name: 'secondName',
         disabled: true,
         validate: validate.name,
         ref: 'secondName',
@@ -45,7 +45,7 @@ export const list = [
     {
         label: 'Display name',
         type: 'text',
-        name: 'display_name',
+        name: 'displayName',
         disabled: true,
         ref: 'displayName',
     },

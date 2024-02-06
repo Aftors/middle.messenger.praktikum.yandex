@@ -1,8 +1,13 @@
 import Block from '../../core/Block.ts'
 import { connect } from '../../core/connect.ts'
+import { createWebSocket } from '../../services/chat.ts'
+import { initChatPage } from '../../services/initApp.ts'
 
 interface Props {
     openDialog: () => void
+    onSelectChat: (e: Event) => void
+    chats: []
+    selectedChat: number
 }
 
 export class Dialogs extends Block<Props> {
@@ -10,7 +15,21 @@ export class Dialogs extends Block<Props> {
         super({
             ...props,
             openDialog: () => window.store.set({ openModal: true }),
+            onSelectChat: e => {
+                const { id } = e.currentTarget as HTMLAnchorElement
+                if (id) {
+                    try {
+                        const me = window.store.getState('user')
+                        createWebSocket(Number(id), me)
+                        window.store.set({ selectedChat: Number(id) })
+                        window.store.set({ chatRun: true })
+                    } catch (error) {
+                        console.log('не удалось установить соединение')
+                    }
+                }
+            },
         })
+        initChatPage()
     }
     protected render() {
         return `
@@ -20,9 +39,15 @@ export class Dialogs extends Block<Props> {
             {{#if openModal}}
                 {{{ Modal }}}
             {{/if}}
-            {{{ Search }}}
-            {{#each listDialog}} 
-                {{{ DialogItem title=this.title avatar=this.avatar time=this.time subtitle=this.subtitle badge=this.badge }}}  
+            {{#each chats}} 
+                {{{ DialogItem id=this.id 
+                    title=this.title 
+                    avatar=this.avatar 
+                    time=this.time 
+                    subtitle=this.lastMessage.content 
+                    badge=this.badge  
+                    onClick=../onSelectChat 
+                    selectedChat=../selectedChat}}}  
             {{/each}}
         </div>
 
@@ -30,4 +55,8 @@ export class Dialogs extends Block<Props> {
     }
 }
 
-export default connect(({ openModal }) => ({ openModal }))(Dialogs)
+export default connect(({ openModal, chats, selectedChat }) => ({
+    openModal,
+    chats,
+    selectedChat,
+}))(Dialogs)

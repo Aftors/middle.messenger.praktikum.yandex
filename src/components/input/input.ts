@@ -4,12 +4,15 @@ interface IInput {
     style?: string
     name?: string
     type?: string
+    id: string
     value?: string
     disabled?: boolean
     placeholder: string
     onBlur: () => void
+    onChange: () => void
     events: {
         blur: () => void
+        change: () => void
     }
 }
 
@@ -23,6 +26,7 @@ export class Input extends Block<IInput, Refs> {
             ...props,
             events: {
                 blur: props.onBlur,
+                change: props.onChange,
             },
         })
     }
@@ -35,11 +39,13 @@ export class Input extends Block<IInput, Refs> {
             placeholder = '',
             value = '',
             disabled = false,
+            id = '',
         } = this.props
         return `
         <input
             class='input__element${style}'
             name='${name}'
+            id='${id}'
             type='${type}'
             placeholder='${placeholder}'
             value='${value}'

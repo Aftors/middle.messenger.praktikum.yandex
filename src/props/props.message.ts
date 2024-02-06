@@ -9,12 +9,4 @@ export const messages = [
         text: 'Задача организации, в особенности же рамки и место обучения кадров...',
         img: '',
     },
-    {
-        type: 'message-img send',
-        img: 'img1.jpg',
-    },
-    {
-        type: 'message-img',
-        img: 'img2.jpg',
-    },
 ]

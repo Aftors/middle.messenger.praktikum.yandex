@@ -1,3 +1,4 @@
+import { Chat } from '../types/appState.ts'
 import EventBus from './EventBus.ts'
 
 // eslint-disable-next-line no-shadow
@@ -26,8 +27,21 @@ export class Store<State extends Record<string, any>> extends EventBus {
     }
 
     public getStateByID(key: string, value: string) {
+        if (value === 'avatar') {
+            const state = this.state[key]
+            const avatar = `https://ya-praktikum.tech/api/v2/resources${state[value]}`
+            return avatar
+        }
         const state = this.state[key]
         return state[value]
+    }
+
+    public getChatByID(id: number) {
+        const state = this.state.chats
+        if (id === null) {
+            return ''
+        }
+        return state.find((chat: Chat) => chat.id === id)
     }
 
     public set(nextState: Partial<State>) {
