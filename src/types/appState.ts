@@ -8,6 +8,17 @@ export type AppState = {
     chats: Chat[]
     selectedChat: number | null
     chatRun: boolean
+    users: Users[]
+}
+
+export type Users = {
+    id: number
+    firstName: string
+    secondName: string
+    displayName: string
+    login: string
+    avatar: string
+    role: string
 }
 
 export type Nullable<T> = T | null

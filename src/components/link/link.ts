@@ -26,6 +26,16 @@ export class Link extends Block<IAuthLink> {
     }
     protected render() {
         const { text = '', label = '', href = '', type = '' } = this.props
+        if (label === null) {
+            return `
+            <p class='link${type}'>
+                ${text}
+                <a href='${href}'>
+                Guest
+                </a>
+            </p>
+            `
+        }
         return `
                 <p class='link${type}'>
                     ${text}

@@ -26,3 +26,31 @@
     align-items: center;
     gap: 10px;
 }
+
+.users-conteiner {
+    display: flex;
+    flex-direction: row;
+}
+
+.users {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+    border-radius: 20px;
+    margin: 0 5px;
+    cursor: pointer;
+    p {
+        color: var(--chat-background);
+    }
+    &:hover {
+        background-color: var(--text-color);
+        span {
+            color: white;
+        }
+        p {
+            color: red;
+        }
+    }
+}

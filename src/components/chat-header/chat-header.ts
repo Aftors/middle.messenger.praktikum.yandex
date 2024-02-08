@@ -1,5 +1,6 @@
 import Block from '../../core/Block.ts'
 import { connect } from '../../core/connect.ts'
+import { deleteUsersToChat } from '../../services/chat.ts'
 
 interface IProps {
     avatar: string
@@ -7,6 +8,7 @@ interface IProps {
     selectedChat: number
     chat: []
     onOpenSettings: () => void
+    onDelleteUser: (e: Event) => void
 }
 
 export class ChatHeader extends Block<IProps> {
@@ -15,6 +17,10 @@ export class ChatHeader extends Block<IProps> {
             ...props,
             onOpenSettings: () => {
                 window.store.set({ openSettingsChat: true })
+            },
+            onDelleteUser: e => {
+                const target = e.target as HTMLElement
+                deleteUsersToChat(Number(target.id))
             },
         })
     }
@@ -30,17 +36,14 @@ export class ChatHeader extends Block<IProps> {
         <div class='chat-header'>
             <div class='chat-header-dialog'>
                {{#if selectedChat}} 
-                   <div class='avatar'>
-                     <img src='${img}' alt='avatar photo'>
-                   </div>
-               {{/if}}
-                <div class='user-title'>
-                   {{#if selectedChat}}
-                    <span class='user-title__title'>${chat.title}</span>
-                   {{/if}}
-                </div>
+                    <div class='avatar'>
+                      <img src='${img}' alt='avatar photo'>
+                    </div>
+                    <div class='user-title'>
+                        <span class='user-title__title'>${chat.title}</span>
+                    </div>
+                    {{{ Users onClick=onDelleteUser}}}
             </div>
-                {{#if selectedChat}}
                     {{{ Button label='• • •' type='send' onClick=onOpenSettings }}}
                 {{/if}}
                 {{#if openSettingsChat}}

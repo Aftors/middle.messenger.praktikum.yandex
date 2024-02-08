@@ -1,6 +1,6 @@
 import Block from '../../core/Block.ts'
 import { connect } from '../../core/connect.ts'
-import { createWebSocket } from '../../services/chat.ts'
+import { createWebSocket, getChatUsers } from '../../services/chat.ts'
 import { initChatPage } from '../../services/initApp.ts'
 
 interface Props {
@@ -22,6 +22,7 @@ export class Dialogs extends Block<Props> {
                         const me = window.store.getState('user')
                         createWebSocket(Number(id), me)
                         window.store.set({ selectedChat: Number(id) })
+                        getChatUsers(Number(id))
                         window.store.set({ chatRun: true })
                     } catch (error) {
                         console.log('не удалось установить соединение')

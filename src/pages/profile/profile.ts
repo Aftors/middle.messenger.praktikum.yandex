@@ -84,8 +84,9 @@ export class ProfilePage extends Block<Props, Refs> {
             },
             displayName: window.store.getStateByID('user', 'display_name'),
             onChange: e => {
-                // @ts-ignore
-                changeAvatar(e.target.files[0])
+                const target = e.target as HTMLInputElement
+                const { files } = target
+                files ? changeAvatar(files[0]) : false
             },
         })
     }

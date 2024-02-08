@@ -30,6 +30,7 @@ const initState: AppState = {
     chats: [],
     selectedChat: null,
     chatRun: false,
+    users: [],
 }
 
 window.store = new Store<AppState>(initState)
@@ -56,6 +57,8 @@ registerComponent('ChatFooter', Components.ChatFooter)
 registerComponent('ChatMessage', Components.ChatMessage)
 registerComponent('ModalChat', Components.ModalChat)
 registerComponent('Modal', Components.Modal)
+
+registerComponent('Users', Components.Users)
 
 window.addEventListener('popstate', () => {
     router.start()

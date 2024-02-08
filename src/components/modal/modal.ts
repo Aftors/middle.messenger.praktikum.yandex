@@ -29,8 +29,9 @@ export class Modal extends Block<Props, Refs> {
                 }
                 if (nameChat) {
                     this.refs.error.setProps({ error: undefined })
+                    window.store.set({ openModal: false })
                     createChat(nameChat)
-                        .then(() => window.store.set({ openModal: false }))
+                        .then(() => true)
                         .catch(() =>
                             this.refs.error.setProps({ error: 'error' })
                         )
