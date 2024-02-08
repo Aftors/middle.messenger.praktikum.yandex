@@ -25,13 +25,21 @@ export class Avatar extends Block<IInput, Refs> {
 
     protected render() {
         const { name = '', avatar } = this.props
-        const linkAvatar = `https://ya-praktikum.tech/api/v2/resources${avatar}`
+        if (avatar !== null) {
+            const linkAvatar = `https://ya-praktikum.tech/api/v2/resources${avatar}`
+            return `
+            <label for="avatar">
+                <img class='dialog-list__logo' src=${linkAvatar} alt='avatar'>
+                <span>Change</span>
+                <Input type="file" id="avatar" name=${name} ref="input"/>
+            </label>
+            `
+        }
         return `
         <label for="avatar">
-            <img class='dialog-list__logo' src=${linkAvatar} alt='avatar'>
-            <span>Change</span>
-            <Input type="file" id="avatar" name=${name} ref="input"/>
-        </label>
-        `
+                <img class='dialog-list__logo' src='/man.png' alt='avatar'>
+                <span>Change</span>
+                <Input type="file" id="avatar" name=${name} ref="input"/>
+            </label>`
     }
 }

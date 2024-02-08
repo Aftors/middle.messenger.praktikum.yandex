@@ -1,5 +1,6 @@
 import { ChatDTO } from '../api/apiChat.ts'
 import { UserDTO } from '../api/dto/user-dto.ts'
+import { UsersDTO } from '../api/dto/users-dto.ts'
 import { Chat } from '../types/appState.ts'
 import { User } from '../types/user.ts'
 
@@ -36,4 +37,15 @@ export const transformChats = (data: ChatDTO[]): Chat[] =>
                   },
               }
             : null,
+    }))
+
+export const transformUsers = (data: UsersDTO[]) =>
+    data.map(user => ({
+        id: user.id,
+        firstName: user.first_name,
+        secondName: user.second_name,
+        displayName: user.display_name,
+        login: user.login,
+        avatar: user.avatar,
+        role: user.role,
     }))

@@ -1,6 +1,6 @@
 import ApiChat from '../api/apiChat.ts'
 import { apiHasError } from '../core/apiHasError.ts'
-import { transformChats } from '../helpers/apiTransform.ts'
+import { transformChats, transformUsers } from '../helpers/apiTransform.ts'
 import { User } from '../types/user.ts'
 
 const chatApi = new ApiChat()
@@ -39,15 +39,40 @@ const deleteChat = async (id: number) => {
     window.store.set({ chats })
 }
 
+const getChatUsers = async (id: number) => {
+    const response = await chatApi.getChatUsers(id)
+    if (apiHasError(response)) {
+        throw Error(response.reason)
+    }
+    window.store.set({ users: transformUsers(response) })
+}
+
 const addUsersToChat = async (users: string, chat: number) => {
     const usersArray = users.split(' ').map(el => Number(el))
     const data = { users: usersArray, chatId: chat }
     const response = await chatApi.addUsers(data)
     if (apiHasError(response)) {
+        window.store.set({ error: 'Failed to add users' })
         throw Error(response.reason)
     }
     const chats = await getChats()
+    getChatUsers(chat)
+    window.store.set({ openSettingsChat: false })
     window.store.set({ chats })
+}
+
+const deleteUsersToChat = async (usersID: number) => {
+    const me = window.store.getState('user')
+    if (me.id === usersID) {
+        return
+    }
+    const selectedChat = window.store.getState('selectedChat')
+    const data = { users: [usersID], chatId: selectedChat }
+    const response = await chatApi.deleteUsers(data)
+    if (apiHasError(response)) {
+        throw Error(response.reason)
+    }
+    getChatUsers(selectedChat)
 }
 
 const createWebSocket = async (chatid: number, user: User) => {
@@ -55,7 +80,6 @@ const createWebSocket = async (chatid: number, user: User) => {
     if (apiHasError(response)) {
         throw Error(response.reason)
     }
-    console.log(response)
     const socket = new WebSocket(
         `wss://ya-praktikum.tech/ws/chats/${user.id}/${chatid}/${response.token}`
     )
@@ -112,4 +136,12 @@ const createWebSocket = async (chatid: number, user: User) => {
     })
 }
 
-export { createChat, getChats, deleteChat, addUsersToChat, createWebSocket }
+export {
+    createChat,
+    getChats,
+    deleteChat,
+    addUsersToChat,
+    deleteUsersToChat,
+    createWebSocket,
+    getChatUsers,
+}

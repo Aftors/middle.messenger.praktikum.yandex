@@ -62,7 +62,8 @@ export class InputSettings extends Block<IInput, Ref> {
             value = ''
         }
         if (user) {
-            value = user[name]
+            value =
+                user[name] !== null ? (value = user[name]) : (value = 'guest')
         }
         return `
         <div class='input${style} {{#if error}}input__error{{/if}}' >

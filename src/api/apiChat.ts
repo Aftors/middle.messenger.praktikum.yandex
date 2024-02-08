@@ -1,6 +1,7 @@
 import { Fetch } from '../core/fetch.ts'
 import { APIError } from '../types/apiError.ts'
 import { UserDTO } from './dto/user-dto.ts'
+import { UsersDTO } from './dto/users-dto.ts'
 
 export type CreateChat = {
     title: string
@@ -69,6 +70,16 @@ export default class ApiChat {
 
     async addUsers(data: addUserData): Promise<addUserDataResponse | APIError> {
         return apiChat.put<addUserDataResponse>('/users', { data })
+    }
+
+    async deleteUsers(
+        data: addUserData
+    ): Promise<addUserDataResponse | APIError> {
+        return apiChat.delete<addUserDataResponse>('/users', { data })
+    }
+
+    async getChatUsers(data: number): Promise<UsersDTO[] | APIError> {
+        return apiChat.get<UsersDTO[]>(`/${data}/users`)
     }
 
     async getToken(data: number): Promise<tokenResponse | APIError> {

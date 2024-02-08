@@ -30,7 +30,7 @@ export class Store<State extends Record<string, any>> extends EventBus {
         if (value === 'avatar') {
             const state = this.state[key]
             const avatar = `https://ya-praktikum.tech/api/v2/resources${state[value]}`
-            return avatar
+            return state[value] === null ? 'man.png' : avatar
         }
         const state = this.state[key]
         return state[value]

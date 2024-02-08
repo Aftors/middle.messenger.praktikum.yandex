@@ -22,3 +22,5 @@ export { ErrorLine } from './error-line/error-line.ts'
 
 export { ModalChat } from './modal-chat/modal-chat.ts'
 export { Modal } from './modal/modal.ts'
+
+export { default as Users } from './chat-header/users.ts'

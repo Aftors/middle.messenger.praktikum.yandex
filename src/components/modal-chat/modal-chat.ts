@@ -37,9 +37,6 @@ export class ModalChat extends Block<Props, Refs> {
                     })
                 }
                 if (idUser) {
-                    this.refs.error.setProps({
-                        error: undefined,
-                    })
                     addUsersToChat(idUser.toString(), this.props.selectedChat)
                 }
             },
