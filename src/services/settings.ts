@@ -31,10 +31,9 @@ const changePass = async (data: ChangePass) => {
     router.go(ERoutes.SETTINGS)
 }
 
-const changeAvatar = async (data: any) => {
-    const file = data
+const changeAvatar = async (data: Blob) => {
     const formData = new FormData()
-    formData.append('avatar', file)
+    formData.append('avatar', data)
     const response = await settingsApi.changeAvatar(formData)
     if (apiHasError(response)) {
         throw Error(response.reason)
