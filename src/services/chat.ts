@@ -97,15 +97,16 @@ const createWebSocket = async (chatid: number, user: User) => {
     let pingInterval: number
 
     socket.addEventListener('open', () => {
-        pingInterval = setInterval(
-            () =>
-                socket.send(
-                    JSON.stringify({
-                        type: 'ping',
-                    })
-                ),
-            10000
-        )
+        pingInterval = setInterval(() => {
+            if (window.store.getState('selectedChat') !== chatid) {
+                socket.close()
+            }
+            socket.send(
+                JSON.stringify({
+                    type: 'ping',
+                })
+            )
+        }, 10000)
         const body = document.getElementById('chat-body') as HTMLDivElement
         body.innerText = ''
         console.log('Соединение установлено')
