@@ -37,11 +37,11 @@ export class DialogItem extends Block<IPropsItem> {
             selected = 'selected'
         }
         let img = ''
-        if (!avatar) {
+        if (!avatar || avatar === null) {
             img = 'man2'
         }
         if (avatar) {
-            img = avatar
+            img = `https://ya-praktikum.tech/api/v2/resources/${avatar}`
         }
         return `
         <a class='dialog-item ${selected}' id='${id}'>
