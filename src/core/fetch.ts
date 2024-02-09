@@ -12,6 +12,17 @@ interface IOptions {
     timeout?: number
 }
 
+type HTTPMethod = <TResponse>(
+    url: string,
+    options?: OptionsWithoutMethod
+) => Promise<TResponse>
+
+type Request = <TResponse>(
+    url: string,
+    options: IOptions,
+    timeout?: number
+) => Promise<TResponse>
+
 type OptionsWithoutMethod = Omit<IOptions, 'method'>
 
 const queryStringify = (data: { [key: string]: any }): string => {
@@ -31,52 +42,33 @@ export class Fetch {
         this.apiUrl = `${this.HOST}${apiPath}`
     }
 
-    get<TResponse>(
-        url: string,
-        options: OptionsWithoutMethod = {}
-    ): Promise<TResponse> {
+    get: HTTPMethod = (url, options = {}) => {
         const Url = options.data ? `${url}${queryStringify(options.data)}` : url
-        return this.request<TResponse>(`${this.apiUrl}${Url}`, {
+        return this.request(`${this.apiUrl}${Url}`, {
             ...options,
             method: METHODS.GET,
         })
     }
 
-    post<TResponse>(
-        url: string,
-        options: OptionsWithoutMethod = {}
-    ): Promise<TResponse> {
-        return this.request<TResponse>(`${this.apiUrl}${url}`, {
+    post: HTTPMethod = (url, options = {}) =>
+        this.request(`${this.apiUrl}${url}`, {
             ...options,
             method: METHODS.POST,
         })
-    }
 
-    put<TResponse>(
-        url: string,
-        options: OptionsWithoutMethod = {}
-    ): Promise<TResponse> {
-        return this.request<TResponse>(`${this.apiUrl}${url}`, {
+    put: HTTPMethod = (url, options = {}) =>
+        this.request(`${this.apiUrl}${url}`, {
             ...options,
             method: METHODS.PUT,
         })
-    }
 
-    delete<TResponse>(
-        url: string,
-        options: OptionsWithoutMethod = {}
-    ): Promise<TResponse> {
-        return this.request<TResponse>(`${this.apiUrl}${url}`, {
+    delete: HTTPMethod = (url, options = {}) =>
+        this.request(`${this.apiUrl}${url}`, {
             ...options,
             method: METHODS.DELETE,
         })
-    }
 
-    request = <TResponse>(
-        url: string,
-        options: IOptions = {},
-        timeout = 5000
-    ): Promise<TResponse> => {
+    request: Request = (url, options = {}, timeout = 5000) => {
         const { method, data, headers = {} } = options
 
         return new Promise((resolve, reject) => {
