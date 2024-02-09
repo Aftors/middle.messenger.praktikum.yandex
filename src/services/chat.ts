@@ -5,12 +5,22 @@ import { User } from '../types/user.ts'
 
 const chatApi = new ApiChat()
 
+type Message = {
+    id: number
+    user_id: number
+    chat_id: number
+    type: string
+    time: string
+    content: string
+    is_read: boolean
+    file: string | null
+}
+
 const getChats = async () => {
     const responseChat = await chatApi.getChats()
     if (apiHasError(responseChat)) {
         throw Error(responseChat.reason)
     }
-
     return transformChats(responseChat)
 }
 
@@ -84,7 +94,15 @@ const createWebSocket = async (chatid: number, user: User) => {
         `wss://ya-praktikum.tech/ws/chats/${user.id}/${chatid}/${response.token}`
     )
     socket.addEventListener('open', () => {
+        const body = document.getElementById('chat-body') as HTMLDivElement
+        body.innerText = ''
         console.log('Соединение установлено')
+        socket.send(
+            JSON.stringify({
+                content: '0',
+                type: 'get old',
+            })
+        )
         const sendBtn = document.getElementById('send-message')
         if (sendBtn) {
             sendBtn.addEventListener('click', () => {
@@ -103,6 +121,7 @@ const createWebSocket = async (chatid: number, user: User) => {
             })
         }
     })
+
     socket.addEventListener('close', event => {
         if (event.wasClean) {
             console.log('Соединение закрыто чисто')
@@ -115,13 +134,27 @@ const createWebSocket = async (chatid: number, user: User) => {
 
     socket.addEventListener('message', event => {
         console.log('Получены данные', event.data)
-
         const data = JSON.parse(event.data)
-
         const me = window.store.getStateByID('user', 'id')
-
         const messages = document.getElementById('chat-body')
         if (messages) {
+            if (Array.isArray(data)) {
+                data.reverse().map((message: Message) => {
+                    const div = document.createElement('div')
+                    div.classList.add('chat-message')
+                    div.classList.add('message_me')
+                    if (message.user_id === me) {
+                        div.classList.add('send')
+                    } else {
+                        false
+                    }
+                    div.innerText = message.content
+                    messages.append(div)
+                    messages.scrollTop = messages.scrollHeight
+                    return true
+                })
+                return
+            }
             const div = document.createElement('div')
             div.classList.add('chat-message')
             div.classList.add('message_me')
@@ -132,6 +165,7 @@ const createWebSocket = async (chatid: number, user: User) => {
             }
             div.innerText = data.content
             messages.append(div)
+            messages.scrollTop = messages.scrollHeight
         }
     })
 }

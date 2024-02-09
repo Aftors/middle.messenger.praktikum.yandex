@@ -30,6 +30,9 @@
 .users-conteiner {
     display: flex;
     flex-direction: row;
+    img {
+        margin: 5px 0;
+    }
 }
 
 .users {

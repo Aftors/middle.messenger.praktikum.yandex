@@ -1,3 +1,4 @@
+import Handlebars from 'handlebars'
 import * as Components from './components/index.ts'
 import { registerComponent } from './core/regComponent.ts'
 import router from './router/router.ts'
@@ -59,6 +60,8 @@ registerComponent('ModalChat', Components.ModalChat)
 registerComponent('Modal', Components.Modal)
 
 registerComponent('Users', Components.Users)
+
+Handlebars.registerHelper('isdefined', value => value !== null || undefined)
 
 window.addEventListener('popstate', () => {
     router.start()
