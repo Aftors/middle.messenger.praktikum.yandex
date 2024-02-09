@@ -9,6 +9,10 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url))
 
 app.use(express.static(path.join(__dirname, 'dist')))
 
+app.get('*', (_req, res) => {
+    res.sendFile(path.join(__dirname, 'dist', 'index.html'))
+})
+
 app.get('/sign-up', () => {})
 app.get('/sign-in', () => {})
 app.get('/', () => {})
