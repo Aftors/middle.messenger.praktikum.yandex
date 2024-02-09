@@ -134,7 +134,13 @@ const createWebSocket = async (chatid: number, user: User) => {
 
     socket.addEventListener('message', event => {
         console.log('Получены данные', event.data)
-        const data = JSON.parse(event.data)
+        let data: Message
+        try {
+            data = JSON.parse(event.data)
+        } catch (error) {
+            console.log(error)
+            return
+        }
         const me = window.store.getStateByID('user', 'id')
         const messages = document.getElementById('chat-body')
         if (messages) {

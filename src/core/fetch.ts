@@ -35,7 +35,8 @@ export class Fetch {
         url: string,
         options: OptionsWithoutMethod = {}
     ): Promise<TResponse> {
-        return this.request<TResponse>(`${this.apiUrl}${url}`, {
+        const Url = options.data ? `${url}${queryStringify(options.data)}` : url
+        return this.request<TResponse>(`${this.apiUrl}${Url}`, {
             ...options,
             method: METHODS.GET,
         })
@@ -85,7 +86,6 @@ export class Fetch {
             }
 
             const xhr = new XMLHttpRequest()
-            const isGet = method === METHODS.GET
 
             if (headers) {
                 Object.entries(headers).forEach(([key, value]) => {
@@ -93,10 +93,7 @@ export class Fetch {
                 })
             }
 
-            xhr.open(
-                method,
-                isGet && !!data ? `${url}${queryStringify(data)}` : url
-            )
+            xhr.open(method, url)
 
             if (!(data instanceof FormData)) {
                 xhr.setRequestHeader('Content-Type', 'application/json')
@@ -124,7 +121,7 @@ export class Fetch {
 
             xhr.timeout = timeout
 
-            if (isGet || !data) {
+            if (method === METHODS.GET) {
                 xhr.send()
             } else {
                 xhr.send(data instanceof FormData ? data : JSON.stringify(data))
