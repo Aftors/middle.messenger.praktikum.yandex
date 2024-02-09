@@ -93,7 +93,19 @@ const createWebSocket = async (chatid: number, user: User) => {
     const socket = new WebSocket(
         `wss://ya-praktikum.tech/ws/chats/${user.id}/${chatid}/${response.token}`
     )
+
+    let pingInterval: number
+
     socket.addEventListener('open', () => {
+        pingInterval = setInterval(
+            () =>
+                socket.send(
+                    JSON.stringify({
+                        type: 'ping',
+                    })
+                ),
+            10000
+        )
         const body = document.getElementById('chat-body') as HTMLDivElement
         body.innerText = ''
         console.log('Соединение установлено')
@@ -125,10 +137,12 @@ const createWebSocket = async (chatid: number, user: User) => {
     socket.addEventListener('close', event => {
         if (event.wasClean) {
             console.log('Соединение закрыто чисто')
+            clearInterval(pingInterval)
         } else {
             console.log('Обрыв соединения')
+            clearInterval(pingInterval)
         }
-
+        clearInterval(pingInterval)
         console.log(`Код: ${event.code} | Причина: ${event.reason}`)
     })
 
@@ -139,6 +153,9 @@ const createWebSocket = async (chatid: number, user: User) => {
             data = JSON.parse(event.data)
         } catch (error) {
             console.log(error)
+            return
+        }
+        if (data.type === 'pong') {
             return
         }
         const me = window.store.getStateByID('user', 'id')
