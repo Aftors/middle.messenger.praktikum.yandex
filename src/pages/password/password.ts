@@ -1,7 +1,9 @@
 import Block from '../../core/Block.ts'
 import { passwordList } from '../../props/props.password.ts'
 import { InputAuth } from '../../components/index.ts'
-import { navigate } from '../../core/navigate.ts'
+import router from '../../router/router.ts'
+import { ERoutes } from '../../types/enums.ts'
+import { changePass } from '../../services/settings.ts'
 
 interface Props {
     passwordList: unknown
@@ -21,20 +23,15 @@ export class PasswordPage extends Block<Props, Refs> {
             passwordList,
             onSave: e => {
                 e.preventDefault()
-                const password = this.refs.password.value()
+                const newPassword = this.refs.password.value()
                 const passwordTwo = this.refs.passwordTwo.value()
-                const passwordOld = this.refs.passwordOld.value()
-                if (password && passwordTwo && passwordOld) {
-                    console.log({
-                        password,
-                        passwordTwo,
-                        passwordOld,
-                    })
-                    navigate('profile')
+                const oldPassword = this.refs.passwordOld.value()
+                if (newPassword && passwordTwo && oldPassword) {
+                    changePass({ oldPassword, newPassword })
                 }
             },
             onClick: () => {
-                navigate('profile')
+                router.go(ERoutes.SETTINGS)
             },
         })
     }

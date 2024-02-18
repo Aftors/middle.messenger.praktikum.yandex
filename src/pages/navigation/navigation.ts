@@ -1,5 +1,6 @@
 import Block from '../../core/Block.ts'
-import { navigate } from '../../core/navigate.ts'
+import router from '../../router/router.ts'
+import { ERoutes } from '../../types/enums.ts'
 
 export class Navigation extends Block {
     constructor() {
@@ -9,43 +10,43 @@ export class Navigation extends Block {
                 {
                     label: 'LoginPage',
                     onClick: () => {
-                        navigate('login')
+                        router.go('/')
                     },
                 },
                 {
                     label: 'Registration page',
                     onClick: () => {
-                        navigate('create')
+                        router.go(ERoutes.REGISTER)
                     },
                 },
                 {
                     label: 'Chat page',
                     onClick: () => {
-                        navigate('chat')
+                        router.go(ERoutes.CHATS)
                     },
                 },
                 {
                     label: 'Profile page',
                     onClick: () => {
-                        navigate('profile')
+                        router.go(ERoutes.SETTINGS)
                     },
                 },
                 {
                     label: 'Change password page',
                     onClick: () => {
-                        navigate('password')
+                        router.go('password')
                     },
                 },
                 {
                     label: '404 page',
                     onClick: () => {
-                        navigate('page404')
+                        router.go(ERoutes.NOT_FOUND_PAGE)
                     },
                 },
                 {
                     label: '50* page',
                     onClick: () => {
-                        navigate('page500')
+                        router.go(ERoutes.SERVER_ERROR_PAGE)
                     },
                 },
             ],

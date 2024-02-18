@@ -1,14 +1,26 @@
 import Block from '../../core/Block.ts'
-import { navigate } from '../../core/navigate.ts'
+import { connect } from '../../core/connect.ts'
+import router from '../../router/router.ts'
+import { logout } from '../../services/auth.ts'
+import { ERoutes } from '../../types/enums.ts'
 
-export class DialogListHeader extends Block {
-    constructor() {
+interface Props {
+    onClick: () => void
+    onProfile: (e: Event) => void
+    user: {}
+    avatar: string
+}
+
+export class DialogListHeader extends Block<Props> {
+    constructor(props: Props) {
         super({
+            ...props,
+            avatar: window.store.getStateByID('user', 'avatar'),
             onClick: () => {
-                navigate('login')
+                logout()
             },
             onProfile: (e: Event) => {
-                navigate('profile')
+                router.go(ERoutes.SETTINGS)
                 e.preventDefault()
                 e.stopPropagation()
             },
@@ -18,11 +30,11 @@ export class DialogListHeader extends Block {
         return `
         <div class='dialog-list__header'>
             <a page='profile'>
-                <img class='dialog-list__logo' src='man.png' alt='avatar'>
+                <img class='dialog-list__logo' src=${this.props.avatar} alt='avatar'>
             </a>
         <div class='dialog-list__header__user-info' >
-            {{{ Link label='Vasiliy' onClick=onProfile type='__profile' }}}
-            <p>+7 (981) 755-85-28</p>
+            {{{ Link label=user.displayName onClick=onProfile type='__profile' }}}
+            <p>{{user.phone}}</p>
          </div>
         {{{ Button label='Log out' type='link' onClick=onClick }}}
     </div>
@@ -30,3 +42,5 @@ export class DialogListHeader extends Block {
         `
     }
 }
+
+export default connect(({ user }) => ({ user }))(DialogListHeader)

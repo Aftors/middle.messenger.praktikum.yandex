@@ -4,12 +4,13 @@
     position: absolute;
     align-items: center;
     justify-content: space-between;
+    min-height: 58px;
     left: 0;
     right: 0;
     top: 0;
     padding: 10px 0;
     margin: 0 10px;
-    z-index: 9000;
+    z-index: 1000;
     background-color: var(--chat-background);
     gap: 10px;
     border-bottom: 1px var(--second-color) solid;
@@ -24,4 +25,35 @@
     flex-direction: row;
     align-items: center;
     gap: 10px;
+}
+
+.users-conteiner {
+    display: flex;
+    flex-direction: row;
+    img {
+        margin: 5px 0;
+    }
+}
+
+.users {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+    border-radius: 20px;
+    margin: 0 5px;
+    cursor: pointer;
+    p {
+        color: var(--chat-background);
+    }
+    &:hover {
+        background-color: var(--text-color);
+        span {
+            color: white;
+        }
+        p {
+            color: red;
+        }
+    }
 }

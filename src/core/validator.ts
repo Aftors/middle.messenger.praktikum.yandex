@@ -4,7 +4,6 @@ import {
     ONLY_NUMBERS,
     PHONE,
     LOGIN,
-    NAME,
 } from '../helpers/regexp.ts'
 
 export const login = (value: string) => {
@@ -76,9 +75,6 @@ export const phone = (value: string) => {
 export const name = (value: string) => {
     if (value.length === 0) {
         return 'Field can not be empty'
-    }
-    if (!NAME.test(value)) {
-        return 'First letter is uppercase and can be use to "-"'
     }
     return ''
 }

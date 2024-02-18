@@ -1,7 +1,10 @@
 import Block from '../../core/Block.ts'
-import { list } from '../../props/props.profile.ts'
 import { InputAuth } from '../../components/index.ts'
-import { navigate } from '../../core/navigate.ts'
+import router from '../../router/router.ts'
+import { ERoutes } from '../../types/enums.ts'
+import { list } from '../../props/props.profile.ts'
+import { change, changeAvatar } from '../../services/settings.ts'
+import { connect } from '../../core/connect.ts'
 
 interface Props {
     avatar?: string
@@ -10,10 +13,13 @@ interface Props {
     subtitle?: string
     badge?: string
     list: unknown
+    displayName: string
     onClick?: (e: Event) => void
     onSave: (e: Event) => void
     onReturn: (e: Event) => void
+    onChange: (e: Event) => void
     events?: {}
+    user: { [key: string]: string }
 }
 
 type Refs = {
@@ -21,9 +27,11 @@ type Refs = {
 }
 
 export class ProfilePage extends Block<Props, Refs> {
-    constructor() {
+    constructor(props: Props) {
         super({
+            ...props,
             list,
+
             onSave: e => {
                 e.preventDefault()
                 const login = this.refs.login.value()
@@ -32,15 +40,23 @@ export class ProfilePage extends Block<Props, Refs> {
                 const secondName = this.refs.secondName.value()
                 const displayName = this.refs.displayName.value()
                 const phone = this.refs.phone.value()
-                if (login && email && phone && firstName && secondName) {
-                    console.log({
-                        firstName,
-                        secondName,
-                        displayName,
+                if (
+                    login &&
+                    email &&
+                    phone &&
+                    firstName &&
+                    secondName &&
+                    displayName
+                ) {
+                    const me = {
                         login,
                         email,
                         phone,
-                    })
+                        first_name: firstName,
+                        second_name: secondName,
+                        display_name: displayName,
+                    }
+                    change(me)
                     const target = e.target as HTMLElement
                     if (target?.id === 'edit') {
                         const inputs =
@@ -61,35 +77,40 @@ export class ProfilePage extends Block<Props, Refs> {
                 }
             },
             onClick: () => {
-                navigate('password')
+                router.go(ERoutes.PASSWORD)
             },
             onReturn: () => {
-                navigate('chat')
+                router.go(ERoutes.CHATS)
+            },
+            displayName: window.store.getStateByID('user', 'display_name'),
+            onChange: e => {
+                const target = e.target as HTMLInputElement
+                const { files } = target
+                files ? changeAvatar(files[0]) : false
             },
         })
     }
+
     protected render() {
         return `
             <main class='profile'>
-                {{{ Button label='Return' type='return' onClick=onReturn}}}
+                {{{ Button label='Return' type='return' onClick=onReturn }}}
                 <div class='profile-conteiner'>
                     <div class='profile-header'>
-                        <img class='dialog-list__logo' src='man.png' alt='avatar' page='profile'>
-                        <h2>Vasiliy</h2>
-                        <p>+7 (981) 755-85-28</p>
+                       {{{Avatar ref="file" onChange=onChange avatar=user.avatar}}}
+                        <h2>{{user.displayName}}</h2>
                     </div>
                     <div class='profile-item-list'>
                         <ul>
                             <form class='profile-form' name='profile-form'>
                                 {{#each list}}
                                      <li>
-                                        {{{ InputAuth 
+                                        {{{ InputSettings 
                                             style='__profile' 
                                             disabled='disabled' 
-                                            label=this.label 
-                                            value=this.value 
+                                            label=this.label
                                             type=this.type 
-                                            name=this.name 
+                                            name=this.name
                                             ref=this.ref
                                             validate=this.validate
                                             disabled=this.disabled }}}
@@ -109,3 +130,5 @@ export class ProfilePage extends Block<Props, Refs> {
         `
     }
 }
+
+export default connect(({ user }) => ({ user }))(ProfilePage)

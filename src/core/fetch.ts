@@ -12,7 +12,18 @@ interface IOptions {
     timeout?: number
 }
 
-type Method = (url: string, options?: IOptions) => Promise<any>
+type HTTPMethod = <TResponse>(
+    url: string,
+    options?: OptionsWithoutMethod
+) => Promise<TResponse>
+
+type Request = <TResponse>(
+    url: string,
+    options: IOptions,
+    timeout?: number
+) => Promise<TResponse>
+
+type OptionsWithoutMethod = Omit<IOptions, 'method'>
 
 const queryStringify = (data: { [key: string]: any }): string => {
     if (typeof data !== 'object') {
@@ -23,82 +34,90 @@ const queryStringify = (data: { [key: string]: any }): string => {
         .join('&')}`
 }
 
-class Fetch {
-    get: Method = (
-        url: string,
-        options: IOptions = {}
-    ): Promise<XMLHttpRequest> => {
-        const { data } = options
-        if (data) {
-            const params = queryStringify(data)
-            return this.request(
-                url + params,
-                { ...options, method: METHODS.GET },
-                options.timeout
-            )
-        }
-        return this.request(
-            url,
-            { ...options, method: METHODS.GET },
-            options.timeout
-        )
+export class Fetch {
+    protected HOST = 'https://ya-praktikum.tech/api/v2'
+    private apiUrl: string = ''
+
+    constructor(apiPath: string) {
+        this.apiUrl = `${this.HOST}${apiPath}`
     }
 
-    post: Method = (url: string, options: IOptions = {}) =>
-        this.request(url, { ...options, method: METHODS.POST }, options.timeout)
-    put: Method = (url: string, options: IOptions = {}) =>
-        this.request(url, { ...options, method: METHODS.PUT }, options.timeout)
-    delete: Method = (url: string, options: IOptions = {}) =>
-        this.request(
-            url,
-            { ...options, method: METHODS.DELETE },
-            options.timeout
-        )
+    get: HTTPMethod = (url, options = {}) => {
+        const Url = options.data ? `${url}${queryStringify(options.data)}` : url
+        return this.request(`${this.apiUrl}${Url}`, {
+            ...options,
+            method: METHODS.GET,
+        })
+    }
 
-    request = (
-        url: string,
-        options: IOptions = {},
-        timeout = 5000
-    ): Promise<XMLHttpRequest> => {
+    post: HTTPMethod = (url, options = {}) =>
+        this.request(`${this.apiUrl}${url}`, {
+            ...options,
+            method: METHODS.POST,
+        })
+
+    put: HTTPMethod = (url, options = {}) =>
+        this.request(`${this.apiUrl}${url}`, {
+            ...options,
+            method: METHODS.PUT,
+        })
+
+    delete: HTTPMethod = (url, options = {}) =>
+        this.request(`${this.apiUrl}${url}`, {
+            ...options,
+            method: METHODS.DELETE,
+        })
+
+    request: Request = (url, options = {}, timeout = 5000) => {
         const { method, data, headers = {} } = options
 
         return new Promise((resolve, reject) => {
             if (!method) {
+                reject(new Error('No method'))
                 return
             }
 
             const xhr = new XMLHttpRequest()
 
+            if (headers) {
+                Object.entries(headers).forEach(([key, value]) => {
+                    xhr.setRequestHeader(key, value)
+                })
+            }
+
             xhr.open(method, url)
 
-            xhr.onload = () => {
-                resolve(xhr)
+            if (!(data instanceof FormData)) {
+                xhr.setRequestHeader('Content-Type', 'application/json')
+            }
+
+            xhr.withCredentials = true
+            xhr.responseType = 'json'
+
+            xhr.onreadystatechange = () => {
+                if (xhr.readyState === XMLHttpRequest.DONE) {
+                    if (
+                        xhr.status === 0 ||
+                        (xhr.status >= 200 && xhr.status < 400)
+                    ) {
+                        resolve(xhr.response)
+                    } else {
+                        reject(xhr.response)
+                    }
+                }
             }
 
             xhr.onabort = () => reject(new Error('User aborted request'))
             xhr.onerror = () => reject(new Error('Network error occurred'))
             xhr.ontimeout = () => reject(new Error('Request timed out'))
 
-            if (headers) {
-                // eslint-disable-next-line array-callback-return
-                Object.entries(headers).map(([key, value]) => {
-                    xhr.setRequestHeader(key, value)
-                })
-            }
+            xhr.timeout = timeout
 
-            if (!method) {
-                xhr.send()
-            }
-
-            if (method === METHODS.GET || !data) {
+            if (method === METHODS.GET) {
                 xhr.send()
             } else {
-                xhr.send(JSON.stringify(data))
+                xhr.send(data instanceof FormData ? data : JSON.stringify(data))
             }
-
-            setTimeout(() => {
-                reject(new Error('время вышло!'))
-            }, timeout)
         })
     }
 }

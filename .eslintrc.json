@@ -8,6 +8,11 @@
     "settings": {
         "import/parsers": {
             "@typescript-eslint/parser": [".ts"]
+        },
+        "import/resolver": {
+            "node": {
+                "extensions": [".js", ".ts"]
+            }
         }
     },
     "parserOptions": {
@@ -32,9 +37,11 @@
         "no-use-before-define": 0,
         "no-unused-vars": 0,
         "no-param-reassign": 0,
-        "import/no-cycle": 0, // пока нет нормального роутинга
+        "no-restricted-syntax": 0,
+        "func-names": 0,
         "@typescript-eslint/no-explicit-any": 0,
         "n/no-unpublished-import": 0,
+        "no-unused-expressions": 0,
         "@typescript-eslint/no-unused-vars": "off",
         "@typescript-eslint/no-this-alias": "off",
         "@typescript-eslint/ban-ts-ignore": "off",
