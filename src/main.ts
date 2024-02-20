@@ -1,12 +1,12 @@
 import Handlebars from 'handlebars'
 import * as Components from './components/index.ts'
 import { registerComponent } from './core/regComponent.ts'
-import router from './router/router.ts'
 import * as Pages from './pages/index.ts'
 import { ERoutes } from './types/enums.ts'
 import { Store } from './core/Store.ts'
 import { AppState } from './types/appState.ts'
 import { initApp } from './services/initApp.ts'
+import Router from './router/router.ts'
 
 declare global {
     interface Window {
@@ -63,11 +63,13 @@ registerComponent('Users', Components.Users)
 
 Handlebars.registerHelper('isdefined', value => value !== null || undefined)
 
+export const router = new Router('app')
+
 window.addEventListener('popstate', () => {
     router.start()
 })
 
-interface IPages {
+export interface IPages {
     [key: string]: any
 }
 
