@@ -44,6 +44,7 @@
         "n/no-unpublished-import": 0,
         "no-unused-expressions": 0,
         "max-classes-per-file": 0,
+        "import/no-cycle": 0,
         "@typescript-eslint/no-unused-vars": "off",
         "@typescript-eslint/no-this-alias": "off",
         "@typescript-eslint/ban-ts-ignore": "off",

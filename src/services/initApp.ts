@@ -1,11 +1,12 @@
 import { UserDTO } from '../api/dto/user-dto.ts'
 import { transformUser } from '../helpers/apiTransform.ts'
-import router from '../router/router.ts'
+import Router from '../router/router.ts'
 import { ERoutes } from '../types/enums.ts'
 import { getMe } from './auth.ts'
 import { getChats } from './chat.ts'
 
 const initApp = async () => {
+    const router = new Router('app')
     try {
         const me: UserDTO = await getMe()
         window.store.set({ user: transformUser(me) })

@@ -1,9 +1,10 @@
 import Block from '../../core/Block.ts'
-import router from '../../router/router.ts'
+import Router from '../../router/router.ts'
 import { ERoutes } from '../../types/enums.ts'
 
 export class Navigation extends Block {
     constructor() {
+        const router = new Router('app')
         super({
             type: 'link-nav',
             buttons: [

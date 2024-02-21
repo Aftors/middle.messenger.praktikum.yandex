@@ -2,7 +2,7 @@ import Block from '../../core/Block.ts'
 import { InputAuth } from '../../components/index.ts'
 import * as validators from '../../core/validator.ts'
 import { signup } from '../../services/auth.ts'
-import router from '../../router/router.ts'
+import Router from '../../router/router.ts'
 import { ERoutes } from '../../types/enums.ts'
 
 interface Props {
@@ -20,6 +20,7 @@ type Refs = {
 
 export class CreatePage extends Block<Props, Refs> {
     constructor() {
+        const router = new Router('app')
         super({
             validate: {
                 login: validators.login,

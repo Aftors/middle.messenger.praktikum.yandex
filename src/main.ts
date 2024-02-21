@@ -58,38 +58,36 @@ registerComponent('ChatFooter', Components.ChatFooter)
 registerComponent('ChatMessage', Components.ChatMessage)
 registerComponent('ModalChat', Components.ModalChat)
 registerComponent('Modal', Components.Modal)
-
 registerComponent('Users', Components.Users)
 
 Handlebars.registerHelper('isdefined', value => value !== null || undefined)
 
-export const router = new Router('app')
-
 window.addEventListener('popstate', () => {
+    const router = new Router('app')
+    const pages: IPages = {
+        login: Pages.LoginPage,
+        create: Pages.CreatePage,
+        chat: Pages.ChatPage,
+        profile: Pages.ProfilePage,
+        password: Pages.PasswordPage,
+        page404: Pages.Page404,
+        page500: Pages.Page500,
+    }
+
+    router
+        .use(ERoutes.LOGIN, pages.login)
+        .use(ERoutes.REGISTER, pages.create)
+        .use(ERoutes.CHATS, pages.chat)
+        .use(ERoutes.SETTINGS, pages.profile)
+        .use(ERoutes.PASSWORD, pages.password)
+        .use(ERoutes.NOT_FOUND_PAGE, pages.page404)
+        .use(ERoutes.SERVER_ERROR_PAGE, pages.page500)
+
     router.start()
 })
 
 export interface IPages {
     [key: string]: any
 }
-
-const pages: IPages = {
-    login: Pages.LoginPage,
-    create: Pages.CreatePage,
-    chat: Pages.ChatPage,
-    profile: Pages.ProfilePage,
-    password: Pages.PasswordPage,
-    page404: Pages.Page404,
-    page500: Pages.Page500,
-}
-
-router
-    .use(ERoutes.LOGIN, pages.login)
-    .use(ERoutes.REGISTER, pages.create)
-    .use(ERoutes.CHATS, pages.chat)
-    .use(ERoutes.SETTINGS, pages.profile)
-    .use(ERoutes.PASSWORD, pages.password)
-    .use(ERoutes.NOT_FOUND_PAGE, pages.page404)
-    .use(ERoutes.SERVER_ERROR_PAGE, pages.page500)
 
 document.addEventListener('DOMContentLoaded', () => initApp())

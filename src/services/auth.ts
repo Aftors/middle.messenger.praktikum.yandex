@@ -2,7 +2,7 @@ import AuthApi from '../api/apiAuth.ts'
 import { UserDTO } from '../api/dto/user-dto.ts'
 import { apiHasError } from '../core/apiHasError.ts'
 import { transformUser } from '../helpers/apiTransform.ts'
-import router from '../router/router.ts'
+import Router from '../router/router.ts'
 import { CreateUser, LoginRequestData } from '../types/apiTipes.ts'
 import { ERoutes } from '../types/enums.ts'
 
@@ -18,6 +18,7 @@ const getMe = async () => {
 
 const signin = async (data: LoginRequestData) => {
     const response = await authApi.login(data)
+    const router = new Router('app')
     if (apiHasError(response)) {
         throw Error(response.reason)
     }
@@ -29,6 +30,7 @@ const signin = async (data: LoginRequestData) => {
 
 const signup = async (data: CreateUser) => {
     const response = await authApi.create(data)
+    const router = new Router('app')
     if (apiHasError(response)) {
         throw Error(response.reason)
     }
@@ -39,6 +41,7 @@ const signup = async (data: CreateUser) => {
 
 const logout = async () => {
     await authApi.logout()
+    const router = new Router('app')
     router.go(ERoutes.LOGIN)
     window.store.set({ user: null })
 }

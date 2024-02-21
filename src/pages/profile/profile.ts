@@ -1,6 +1,6 @@
 import Block from '../../core/Block.ts'
 import { InputAuth } from '../../components/index.ts'
-import router from '../../router/router.ts'
+import Router from '../../router/router.ts'
 import { ERoutes } from '../../types/enums.ts'
 import { list } from '../../props/props.profile.ts'
 import { change, changeAvatar } from '../../services/settings.ts'
@@ -28,6 +28,7 @@ type Refs = {
 
 export class ProfilePage extends Block<Props, Refs> {
     constructor(props: Props) {
+        const router = new Router('app')
         super({
             ...props,
             list,
