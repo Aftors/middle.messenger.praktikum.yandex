@@ -1,7 +1,7 @@
 import ApiSettings from '../api/apiSettings.ts'
 import { apiHasError } from '../core/apiHasError.ts'
 import { transformUser } from '../helpers/apiTransform.ts'
-import router from '../router/router.ts'
+import Router from '../router/router.ts'
 import { ChangePass, ChangeUser } from '../types/apiTipes.ts'
 import { ERoutes } from '../types/enums.ts'
 
@@ -25,6 +25,7 @@ const change = async (data: ChangeUser) => {
 
 const changePass = async (data: ChangePass) => {
     const response = await settingsApi.changePass(data)
+    const router = new Router('app')
     if (apiHasError(response)) {
         throw Error(response.reason)
     }

@@ -1,7 +1,7 @@
 import Block from '../../core/Block.ts'
 import { passwordList } from '../../props/props.password.ts'
 import { InputAuth } from '../../components/index.ts'
-import router from '../../router/router.ts'
+import Router from '../../router/router.ts'
 import { ERoutes } from '../../types/enums.ts'
 import { changePass } from '../../services/settings.ts'
 
@@ -19,6 +19,7 @@ type Refs = {
 
 export class PasswordPage extends Block<Props, Refs> {
     constructor() {
+        const router = new Router('app')
         super({
             passwordList,
             onSave: e => {

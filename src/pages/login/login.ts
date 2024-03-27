@@ -2,7 +2,7 @@ import Block from '../../core/Block.ts'
 import { InputAuth } from '../../components/index.ts'
 import * as validators from '../../core/validator.ts'
 import { signin } from '../../services/auth.ts'
-import router from '../../router/router.ts'
+import Router from '../../router/router.ts'
 import { ERoutes } from '../../types/enums.ts'
 
 interface IProps {
@@ -22,6 +22,7 @@ type Refs = {
 
 export class LoginPage extends Block<IProps, Refs> {
     constructor() {
+        const router = new Router('app')
         super({
             validate: {
                 login: validators.login,

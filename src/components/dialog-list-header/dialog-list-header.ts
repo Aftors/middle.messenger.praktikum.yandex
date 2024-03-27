@@ -1,6 +1,6 @@
 import Block from '../../core/Block.ts'
 import { connect } from '../../core/connect.ts'
-import router from '../../router/router.ts'
+import Router from '../../router/router.ts'
 import { logout } from '../../services/auth.ts'
 import { ERoutes } from '../../types/enums.ts'
 
@@ -13,6 +13,7 @@ interface Props {
 
 export class DialogListHeader extends Block<Props> {
     constructor(props: Props) {
+        const router = new Router('app')
         super({
             ...props,
             avatar: window.store.getStateByID('user', 'avatar'),

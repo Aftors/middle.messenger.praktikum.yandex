@@ -97,7 +97,7 @@ const createWebSocket = async (chatid: number, user: User) => {
     let pingInterval: number
 
     socket.addEventListener('open', () => {
-        pingInterval = setInterval(() => {
+        pingInterval = window.setInterval(() => {
             if (window.store.getState('selectedChat') !== chatid) {
                 socket.close()
             }
